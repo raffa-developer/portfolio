@@ -69,10 +69,10 @@ export const SkillsSection = () => {
             {skillCategories.map((category, categoryIndex) => (
               <div
                 key={category.title}
-                className="p-6 rounded-2xl bg-card border border-border/50 shadow-card hover:border-primary/30 transition-all duration-300"
+                className="p-4 sm:p-6 rounded-2xl bg-card border border-border/50 shadow-card hover:border-primary/30 transition-all duration-300"
                 style={{ animationDelay: `${categoryIndex * 0.1}s` }}
               >
-                <h3 className="font-heading text-xl font-semibold mb-6 text-foreground">
+                <h3 className="font-heading text-lg sm:text-xl font-semibold mb-4 sm:mb-6 text-foreground">
                   {category.title}
                 </h3>
                 <div className="space-y-5">

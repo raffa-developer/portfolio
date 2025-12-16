@@ -28,27 +28,27 @@ export const HeroSection = () => {
           </p>
 
           {/* Name */}
-          <h1 className="font-heading text-5xl sm:text-6xl md:text-7xl lg:text-8xl font-bold mb-4 animate-fade-up" style={{ animationDelay: '0.2s' }}>
+          <h1 className="font-heading text-4xl sm:text-5xl md:text-6xl lg:text-8xl font-bold mb-4 animate-fade-up" style={{ animationDelay: '0.2s' }}>
             Rafael{' '}
             <span className="text-gradient">Gonçalves</span>
           </h1>
 
           {/* Role */}
-          <h2 className="font-heading text-2xl sm:text-3xl md:text-4xl text-muted-foreground mb-6 animate-fade-up" style={{ animationDelay: '0.3s' }}>
+          <h2 className="font-heading text-xl sm:text-2xl md:text-3xl lg:text-4xl text-muted-foreground mb-6 animate-fade-up" style={{ animationDelay: '0.3s' }}>
             {t('hero.role')}
           </h2>
 
           {/* Description */}
-          <p className="text-lg md:text-xl text-muted-foreground max-w-2xl mx-auto mb-8 animate-fade-up" style={{ animationDelay: '0.4s' }}>
+          <p className="text-base md:text-lg lg:text-xl text-muted-foreground max-w-2xl mx-auto mb-8 px-4 sm:px-0 animate-fade-up" style={{ animationDelay: '0.4s' }}>
             {t('hero.description')}
           </p>
 
           {/* CTAs */}
-          <div className="flex flex-col sm:flex-row items-center justify-center gap-4 mb-12 animate-fade-up" style={{ animationDelay: '0.5s' }}>
+          <div className="flex flex-col sm:flex-row items-center justify-center gap-3 sm:gap-4 mb-12 w-full px-4 sm:px-0 animate-fade-up" style={{ animationDelay: '0.5s' }}>
             <Button
               size="lg"
               onClick={() => handleScrollToSection('#projects')}
-              className="bg-primary/10 text-primary border border-primary/30 hover:bg-primary/20 hover:border-primary/50 transition-all shadow-sm px-8"
+              className="w-full sm:w-auto bg-primary/10 text-primary border border-primary/30 hover:bg-primary/20 hover:border-primary/50 transition-all shadow-sm px-8"
             >
               {t('hero.cta.projects')}
             </Button>
@@ -56,7 +56,7 @@ export const HeroSection = () => {
               variant="outline"
               size="lg"
               onClick={() => handleScrollToSection('#contact')}
-              className="border-border/50 text-primary hover:border-primary/50 hover:bg-primary/5 transition-all px-8"
+              className="w-full sm:w-auto border-border/50 text-primary hover:border-primary/50 hover:bg-primary/5 transition-all px-8"
             >
               {t('hero.cta.contact')}
             </Button>

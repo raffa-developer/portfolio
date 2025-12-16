@@ -35,26 +35,26 @@ export const AboutSection = () => {
             </div>
 
             {/* Content */}
-            <div className="space-y-6">
-              <p className="text-lg text-muted-foreground leading-relaxed">
+            <div className="space-y-4 sm:space-y-6">
+              <p className="text-base sm:text-lg text-muted-foreground leading-relaxed">
                 {t('about.description')}
               </p>
-              <p className="text-lg text-foreground leading-relaxed">
+              <p className="text-base sm:text-lg text-foreground leading-relaxed">
                 {t('about.passion')}
               </p>
 
               {/* Stats */}
-              <div className="grid grid-cols-3 gap-4 pt-8">
+              <div className="grid grid-cols-3 gap-2 sm:gap-4 pt-8">
                 {stats.map((stat, index) => (
                   <div
                     key={index}
-                    className="text-center p-4 rounded-xl bg-card shadow-card border border-border/50 hover:border-primary/30 transition-colors"
+                    className="text-center p-3 sm:p-4 rounded-xl bg-card shadow-card border border-border/50 hover:border-primary/30 transition-colors"
                   >
-                    <stat.icon className="h-6 w-6 mx-auto mb-2 text-primary" />
-                    <div className="font-heading text-2xl md:text-3xl font-bold text-gradient">
+                    <stat.icon className="h-5 w-5 sm:h-6 sm:w-6 mx-auto mb-1 sm:mb-2 text-primary" />
+                    <div className="font-heading text-xl sm:text-2xl md:text-3xl font-bold text-gradient">
                       {stat.value}
                     </div>
-                    <div className="text-xs md:text-sm text-muted-foreground">
+                    <div className="text-[10px] sm:text-xs md:text-sm text-muted-foreground leading-tight">
                       {stat.label}
                     </div>
                   </div>

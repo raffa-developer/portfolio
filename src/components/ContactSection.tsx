@@ -101,9 +101,9 @@ export const ContactSection = () => {
             </p>
           </div>
 
-          <div className="grid lg:grid-cols-5 gap-12">
+          <div className="grid gap-8 lg:grid-cols-5 lg:gap-12">
             {/* Contact Info */}
-            <div className="lg:col-span-2 space-y-8">
+            <div className="lg:col-span-2 space-y-6 sm:space-y-8">
               <div>
                 <h3 className="font-heading text-xl font-semibold mb-4">
                   {t('contact.subtitle')}

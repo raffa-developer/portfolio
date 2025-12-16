@@ -78,8 +78,8 @@ export const ExperienceSection = () => {
                 </div>
 
                 {/* Content card */}
-                <div className={`ml-16 md:ml-0 ${index % 2 === 0 ? 'md:mr-8' : 'md:ml-8'}`}>
-                  <div className="group relative p-6 md:p-8 rounded-2xl bg-card border border-border/50 shadow-card hover:border-primary/40 hover:shadow-glow/20 transition-all duration-500">
+                <div className={`ml-14 sm:ml-16 md:ml-0 ${index % 2 === 0 ? 'md:mr-8' : 'md:ml-8'}`}>
+                  <div className="group relative p-4 sm:p-6 md:p-8 rounded-2xl bg-card border border-border/50 shadow-card hover:border-primary/40 hover:shadow-glow/20 transition-all duration-500">
                     {/* Decorative corner */}
                     <div className={`absolute top-8 hidden md:block ${index % 2 === 0 ? '-right-3' : '-left-3'}`}>
                       <ChevronRight className={`w-6 h-6 text-border group-hover:text-primary/40 transition-colors ${index % 2 === 0 ? '' : 'rotate-180'}`} />
@@ -94,14 +94,14 @@ export const ExperienceSection = () => {
                             {t('experience.current')}
                           </span>
                         )}
-                        <h3 className="font-heading text-xl md:text-2xl font-bold text-foreground group-hover:text-primary transition-colors">
+                        <h3 className="font-heading text-lg sm:text-xl md:text-2xl font-bold text-foreground group-hover:text-primary transition-colors">
                           {t(exp.titleKey)}
                         </h3>
                       </div>
                     </div>
 
                     {/* Company and meta info */}
-                    <div className="flex flex-wrap items-center gap-4 mb-4 text-sm">
+                    <div className="flex flex-col sm:flex-row sm:flex-wrap sm:items-center gap-2 sm:gap-4 mb-4 text-sm">
                       <div className="flex items-center gap-2 text-primary font-semibold">
                         <Briefcase className="h-4 w-4" />
                         <span>{t(exp.companyKey)}</span>
@@ -117,7 +117,7 @@ export const ExperienceSection = () => {
                     </div>
 
                     {/* Description */}
-                    <p className="text-muted-foreground leading-relaxed mb-5">
+                    <p className="text-sm sm:text-base text-muted-foreground leading-relaxed mb-4 sm:mb-5">
                       {t(exp.descriptionKey)}
                     </p>
 

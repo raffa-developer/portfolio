@@ -66,7 +66,7 @@ export const ProjectsSection = () => {
           </div>
 
           {/* Projects Grid */}
-          <div className="grid md:grid-cols-2 gap-8">
+          <div className="grid gap-6 sm:gap-8 md:grid-cols-2">
             {projects.map((project, index) => {
               const isCarousel = project.images && project.images.length > 0;
               const currentImageIndex = isCarousel ? (carouselIndices[index] || 0) : 0;
@@ -113,17 +113,17 @@ export const ProjectsSection = () => {
                         <>
                           <button
                             onClick={handlePrev}
-                            className="absolute left-2 top-1/2 -translate-y-1/2 p-2 rounded-full bg-black/50 hover:bg-black/70 transition-colors opacity-0 group-hover:opacity-100"
+                            className="absolute left-2 top-1/2 -translate-y-1/2 p-2 sm:p-2 rounded-full bg-black/50 hover:bg-black/70 transition-colors opacity-100 sm:opacity-0 sm:group-hover:opacity-100"
                           >
-                            <ChevronLeft className="h-4 w-4 text-white" />
+                            <ChevronLeft className="h-5 w-5 sm:h-4 sm:w-4 text-white" />
                           </button>
                           <button
                             onClick={handleNext}
-                            className="absolute right-2 top-1/2 -translate-y-1/2 p-2 rounded-full bg-black/50 hover:bg-black/70 transition-colors opacity-0 group-hover:opacity-100"
+                            className="absolute right-2 top-1/2 -translate-y-1/2 p-2 sm:p-2 rounded-full bg-black/50 hover:bg-black/70 transition-colors opacity-100 sm:opacity-0 sm:group-hover:opacity-100"
                           >
-                            <ChevronRight className="h-4 w-4 text-white" />
+                            <ChevronRight className="h-5 w-5 sm:h-4 sm:w-4 text-white" />
                           </button>
-                          <div className="absolute bottom-2 left-1/2 -translate-x-1/2 flex gap-1 opacity-0 group-hover:opacity-100 transition-opacity">
+                          <div className="absolute bottom-2 left-1/2 -translate-x-1/2 flex gap-1 opacity-100 sm:opacity-0 sm:group-hover:opacity-100 transition-opacity">
                             {project.images!.map((_, i) => (
                               <div
                                 key={i}
@@ -155,7 +155,7 @@ export const ProjectsSection = () => {
                 </div>
 
                 {/* Content */}
-                <div className="p-6">
+                <div className="p-4 sm:p-6">
                   {/* Status badge */}
                   {project.inDevelopment && (
                     <span className="inline-block px-3 py-1 mb-3 text-xs font-medium rounded-full bg-accent/50 text-accent-foreground border border-primary/20">
