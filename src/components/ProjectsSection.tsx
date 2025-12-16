@@ -74,23 +74,25 @@ export const ProjectsSection = () => {
 
               const handlePrev = () => {
                 if (isCarousel) {
-                  setCarouselIndices((prev) => ({
-                    ...prev,
-                    [index]: prev[index] === 0 || prev[index] === undefined
-                      ? project.images!.length - 1
-                      : prev[index] - 1,
-                  }));
+                  setCarouselIndices((prev) => {
+                    const current = prev[index] ?? 0;
+                    return {
+                      ...prev,
+                      [index]: current === 0 ? project.images!.length - 1 : current - 1,
+                    };
+                  });
                 }
               };
 
               const handleNext = () => {
                 if (isCarousel) {
-                  setCarouselIndices((prev) => ({
-                    ...prev,
-                    [index]: prev[index] === project.images!.length - 1 || prev[index] === undefined
-                      ? 0
-                      : prev[index] + 1,
-                  }));
+                  setCarouselIndices((prev) => {
+                    const current = prev[index] ?? 0;
+                    return {
+                      ...prev,
+                      [index]: current === project.images!.length - 1 ? 0 : current + 1,
+                    };
+                  });
                 }
               };
 
