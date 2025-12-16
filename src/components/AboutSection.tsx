@@ -23,6 +23,17 @@ export const AboutSection = () => {
           </div>
 
           <div className="grid lg:grid-cols-2 gap-12 lg:gap-16 items-center">
+            {/* Profile Photo - shows first on mobile */}
+            <div className="relative flex justify-center lg:hidden order-first mb-8">
+              <div className="w-48 h-48 md:w-64 md:h-64 rounded-full bg-card shadow-card border border-border/50 flex items-center justify-center overflow-hidden">
+                <img
+                  src="/profile.jpg"
+                  alt="Profile photo"
+                  className="w-full h-full object-cover"
+                />
+              </div>
+            </div>
+
             {/* Content */}
             <div className="space-y-6">
               <p className="text-lg text-muted-foreground leading-relaxed">
@@ -51,9 +62,9 @@ export const AboutSection = () => {
               </div>
             </div>
 
-            {/* Profile Photo */}
-            <div className="relative hidden lg:block">
-              <div className="aspect-square rounded-full bg-card shadow-card border border-border/50 flex items-center justify-center overflow-hidden">
+            {/* Profile Photo - desktop only */}
+            <div className="relative hidden lg:flex justify-center lg:justify-start">
+              <div className="w-full aspect-square rounded-full bg-card shadow-card border border-border/50 flex items-center justify-center overflow-hidden">
                 <img
                   src="/profile.jpg"
                   alt="Profile photo"
