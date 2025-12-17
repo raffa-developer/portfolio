@@ -1,6 +1,6 @@
 import { useLanguage } from '@/contexts/LanguageContext';
 import { Briefcase, Calendar, MapPin } from 'lucide-react';
-import { useEffect, useRef, useState } from 'react';
+import { useEffect, useRef, useState, useCallback } from 'react';
 
 interface Experience {
   titleKey: string;
@@ -17,10 +17,18 @@ interface ExperienceCardProps {
   index: number;
 }
 
+interface MousePosition {
+  x: number;
+  y: number;
+}
+
 const ExperienceCard = ({ exp, index }: ExperienceCardProps) => {
   const { t } = useLanguage();
   const cardRef = useRef<HTMLDivElement>(null);
   const [isVisible, setIsVisible] = useState(false);
+  const [mousePosition, setMousePosition] = useState<MousePosition>({ x: 0, y: 0 });
+  const [isHovered, setIsHovered] = useState(false);
+  const lastUpdateRef = useRef(0);
 
   useEffect(() => {
     const observer = new IntersectionObserver(
@@ -50,11 +58,32 @@ const ExperienceCard = ({ exp, index }: ExperienceCardProps) => {
     };
   }, []);
 
+  const handleMouseMove = useCallback((e: React.MouseEvent<HTMLDivElement>) => {
+    if (!cardRef.current) return;
+    
+    // Throttle mouse updates to ~30fps for better performance
+    const now = Date.now();
+    if (now - lastUpdateRef.current < 33) return; // ~30fps
+    lastUpdateRef.current = now;
+    
+    const rect = cardRef.current.getBoundingClientRect();
+    setMousePosition({
+      x: e.clientX - rect.left,
+      y: e.clientY - rect.top,
+    });
+  }, []);
+
+  const handleMouseEnter = useCallback(() => setIsHovered(true), []);
+  const handleMouseLeave = useCallback(() => setIsHovered(false), []);
+
   return (
     <div className={`ml-14 sm:ml-16 md:ml-0 ${index % 2 === 0 ? 'md:mr-8' : 'md:ml-8'}`}>
       <div
         ref={cardRef}
-        className={`group relative p-4 sm:p-6 md:p-8 rounded-2xl bg-card border border-border/50 shadow-card hover:border-primary/40 hover:shadow-glow/20 transition-all duration-500 ${
+        onMouseMove={handleMouseMove}
+        onMouseEnter={handleMouseEnter}
+        onMouseLeave={handleMouseLeave}
+        className={`group relative p-4 sm:p-6 md:p-8 rounded-2xl bg-card border border-border/50 shadow-card hover:border-primary/40 hover:shadow-glow/20 transition-all duration-500 overflow-hidden ${
           isVisible
             ? 'opacity-100 translate-y-0'
             : 'opacity-0 translate-y-8'
@@ -64,6 +93,17 @@ const ExperienceCard = ({ exp, index }: ExperienceCardProps) => {
           transitionTimingFunction: 'ease-out',
         }}
       >
+        {/* Mouse tracking glow effect - optimized */}
+        <div
+          className="pointer-events-none absolute -inset-px rounded-2xl opacity-0 group-hover:opacity-100 transition-opacity duration-500"
+          style={{
+            background: isHovered
+              ? `radial-gradient(500px circle at ${mousePosition.x}px ${mousePosition.y}px, hsl(var(--primary) / 0.08), transparent 40%)`
+              : 'none',
+            willChange: isHovered ? 'opacity, background' : 'auto',
+            transform: 'translateZ(0)', // GPU acceleration
+          }}
+        />
         {/* Header with badge */}
         <div className="flex flex-wrap items-start justify-between gap-3 mb-4">
           <div>
