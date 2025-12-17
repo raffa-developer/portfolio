@@ -1,6 +1,7 @@
 import { useLanguage } from '@/contexts/LanguageContext';
 import { Code2, Layout, Database, Settings } from 'lucide-react';
 import { useRef, useState, useCallback } from 'react';
+import { useScrollAnimation } from '@/hooks/use-scroll-animation';
 
 interface SkillCategory {
   title: string;
@@ -20,6 +21,7 @@ const SkillCard = ({
   category: SkillCategory; 
   categoryIndex: number;
 }) => {
+  const { ref: scrollRef, isVisible } = useScrollAnimation({ threshold: 0.1 });
   const cardRef = useRef<HTMLDivElement>(null);
   const [mousePosition, setMousePosition] = useState<MousePosition>({ x: 0, y: 0 });
   const [isHovered, setIsHovered] = useState(false);
@@ -45,12 +47,23 @@ const SkillCard = ({
 
   return (
     <div
-      ref={cardRef}
+      ref={(node) => {
+        (scrollRef as React.MutableRefObject<HTMLDivElement | null>).current = node;
+        if (cardRef.current === null && node) {
+          cardRef.current = node;
+        }
+      }}
       onMouseMove={handleMouseMove}
       onMouseEnter={handleMouseEnter}
       onMouseLeave={handleMouseLeave}
-      className="group relative p-6 lg:p-8 rounded-xl bg-card border border-border/50 hover:border-primary/20 transition-all duration-300 overflow-hidden"
-      style={{ animationDelay: `${categoryIndex * 0.1}s` }}
+      className={`group relative p-6 lg:p-8 rounded-xl bg-card border border-border/50 hover:border-primary/20 transition-all duration-500 overflow-hidden ${
+        isVisible
+          ? 'opacity-100 translate-y-0'
+          : 'opacity-0 translate-y-8'
+      }`}
+      style={{
+        transitionDelay: `${categoryIndex * 100}ms`,
+      }}
     >
       {/* Mouse tracking glow effect - optimized */}
       <div

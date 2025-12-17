@@ -6,6 +6,159 @@ import { Textarea } from '@/components/ui/textarea';
 import { Mail, Linkedin, Github, Send } from 'lucide-react';
 import { useToast } from '@/hooks/use-toast';
 import emailjs from '@emailjs/browser';
+import { useScrollAnimation } from '@/hooks/use-scroll-animation';
+
+const ContactForm = ({
+  handleSubmit,
+  formData,
+  handleChange,
+  isSubmitting,
+  t,
+}: {
+  handleSubmit: (e: React.FormEvent) => void;
+  formData: { name: string; email: string; subject: string; message: string };
+  handleChange: (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => void;
+  isSubmitting: boolean;
+  t: (key: string) => string;
+}) => {
+  const { ref, isVisible } = useScrollAnimation({ threshold: 0.1 });
+
+  return (
+    <div className="lg:col-span-3" ref={ref as React.RefObject<HTMLDivElement>}>
+      <form
+        onSubmit={handleSubmit}
+        className={`space-y-6 transition-all duration-500 ${
+          isVisible
+            ? 'opacity-100 translate-y-0'
+            : 'opacity-0 translate-y-8'
+        }`}
+      >
+        <div className="grid sm:grid-cols-2 gap-4">
+          <div>
+            <label
+              htmlFor="name"
+              className="block text-sm font-medium mb-2"
+            >
+              {t('contact.form.name')}
+            </label>
+            <Input
+              id="name"
+              name="name"
+              value={formData.name}
+              onChange={handleChange}
+              required
+              className="bg-card border-border focus:border-primary"
+            />
+          </div>
+          <div>
+            <label
+              htmlFor="email"
+              className="block text-sm font-medium mb-2"
+            >
+              {t('contact.form.email')}
+            </label>
+            <Input
+              id="email"
+              name="email"
+              type="email"
+              value={formData.email}
+              onChange={handleChange}
+              required
+              className="bg-card border-border focus:border-primary"
+            />
+          </div>
+        </div>
+
+        <div>
+          <label
+            htmlFor="subject"
+            className="block text-sm font-medium mb-2"
+          >
+            {t('contact.form.subject')}
+          </label>
+          <Input
+            id="subject"
+            name="subject"
+            value={formData.subject}
+            onChange={handleChange}
+            required
+            className="bg-card border-border focus:border-primary"
+          />
+        </div>
+
+        <div>
+          <label
+            htmlFor="message"
+            className="block text-sm font-medium mb-2"
+          >
+            {t('contact.form.message')}
+          </label>
+          <Textarea
+            id="message"
+            name="message"
+            value={formData.message}
+            onChange={handleChange}
+            required
+            rows={5}
+            className="bg-card border-border focus:border-primary resize-none"
+          />
+        </div>
+
+        <Button
+          type="submit"
+          disabled={isSubmitting}
+          className="w-full bg-gradient-primary text-primary-foreground hover:opacity-90 shadow-glow"
+        >
+          {isSubmitting ? (
+            <span className="flex items-center gap-2">
+              <div className="h-4 w-4 border-2 border-primary-foreground/30 border-t-primary-foreground rounded-full animate-spin" />
+              {t('contact.form.sending')}
+            </span>
+          ) : (
+            <span className="flex items-center gap-2">
+              <Send className="h-4 w-4" />
+              {t('contact.form.send')}
+            </span>
+          )}
+        </Button>
+      </form>
+    </div>
+  );
+};
+
+const SocialLinkCard = ({
+  link,
+  index,
+}: {
+  link: { icon: React.ComponentType<{ className?: string }>; label: string; href: string };
+  index: number;
+}) => {
+  const { ref, isVisible } = useScrollAnimation({ threshold: 0.1 });
+
+  return (
+    <a
+      ref={ref as React.RefObject<HTMLAnchorElement>}
+      href={link.href}
+      target="_blank"
+      rel="noopener noreferrer"
+      className={`flex items-center gap-4 p-4 rounded-xl bg-card border border-border/50 hover:border-primary/30 hover:bg-card/80 transition-all duration-500 group ${
+        isVisible
+          ? 'opacity-100 translate-x-0'
+          : 'opacity-0 -translate-x-8'
+      }`}
+      style={{
+        transitionDelay: `${index * 100}ms`,
+      }}
+    >
+      <div className="p-3 rounded-lg bg-primary/10 text-primary group-hover:bg-primary group-hover:text-primary-foreground transition-colors">
+        <link.icon className="h-5 w-5" />
+      </div>
+      <span className="font-medium text-foreground group-hover:text-primary transition-colors">
+        {link.label}
+      </span>
+    </a>
+  );
+};
 
 export const ContactSection = () => {
   const { t } = useLanguage();
@@ -115,118 +268,20 @@ export const ContactSection = () => {
 
               {/* Social Links */}
               <div className="space-y-4">
-                {socialLinks.map((link) => (
-                  <a
-                    key={link.label}
-                    href={link.href}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="flex items-center gap-4 p-4 rounded-xl bg-card border border-border/50 hover:border-primary/30 hover:bg-card/80 transition-all duration-300 group"
-                  >
-                    <div className="p-3 rounded-lg bg-primary/10 text-primary group-hover:bg-primary group-hover:text-primary-foreground transition-colors">
-                      <link.icon className="h-5 w-5" />
-                    </div>
-                    <span className="font-medium text-foreground group-hover:text-primary transition-colors">
-                      {link.label}
-                    </span>
-                  </a>
+                {socialLinks.map((link, index) => (
+                  <SocialLinkCard key={link.label} link={link} index={index} />
                 ))}
               </div>
             </div>
 
             {/* Contact Form */}
-            <div className="lg:col-span-3">
-              <form onSubmit={handleSubmit} className="space-y-6">
-                <div className="grid sm:grid-cols-2 gap-4">
-                  <div>
-                    <label
-                      htmlFor="name"
-                      className="block text-sm font-medium mb-2"
-                    >
-                      {t('contact.form.name')}
-                    </label>
-                    <Input
-                      id="name"
-                      name="name"
-                      value={formData.name}
-                      onChange={handleChange}
-                      required
-                      className="bg-card border-border focus:border-primary"
-                    />
-                  </div>
-                  <div>
-                    <label
-                      htmlFor="email"
-                      className="block text-sm font-medium mb-2"
-                    >
-                      {t('contact.form.email')}
-                    </label>
-                    <Input
-                      id="email"
-                      name="email"
-                      type="email"
-                      value={formData.email}
-                      onChange={handleChange}
-                      required
-                      className="bg-card border-border focus:border-primary"
-                    />
-                  </div>
-                </div>
-
-                <div>
-                  <label
-                    htmlFor="subject"
-                    className="block text-sm font-medium mb-2"
-                  >
-                    {t('contact.form.subject')}
-                  </label>
-                  <Input
-                    id="subject"
-                    name="subject"
-                    value={formData.subject}
-                    onChange={handleChange}
-                    required
-                    className="bg-card border-border focus:border-primary"
-                  />
-                </div>
-
-                <div>
-                  <label
-                    htmlFor="message"
-                    className="block text-sm font-medium mb-2"
-                  >
-                    {t('contact.form.message')}
-                  </label>
-                  <Textarea
-                    id="message"
-                    name="message"
-                    value={formData.message}
-                    onChange={handleChange}
-                    required
-                    rows={5}
-                    className="bg-card border-border focus:border-primary resize-none"
-                  />
-                </div>
-
-                <Button
-                  type="submit"
-                  disabled={isSubmitting}
-                  className="w-full bg-gradient-primary text-primary-foreground hover:opacity-90 shadow-glow"
-                >
-                  {isSubmitting ? (
-                    <span className="flex items-center gap-2">
-                      <div className="h-4 w-4 border-2 border-primary-foreground/30 border-t-primary-foreground rounded-full animate-spin" />
-                      {t('contact.form.sending')}
-                    </span>
-                  ) : (
-                    <span className="flex items-center gap-2">
-                      <Send className="h-4 w-4" />
-                      {t('contact.form.send')}
-                    </span>
-                  )}
-                </Button>
-              </form>
-            </div>
+            <ContactForm
+              handleSubmit={handleSubmit}
+              formData={formData}
+              handleChange={handleChange}
+              isSubmitting={isSubmitting}
+              t={t}
+            />
           </div>
         </div>
       </div>

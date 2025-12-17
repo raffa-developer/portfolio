@@ -2,6 +2,7 @@ import { useLanguage } from '@/contexts/LanguageContext';
 import { ExternalLink, Github, Construction, ChevronLeft, ChevronRight } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { useState, memo, useCallback } from 'react';
+import { useScrollAnimation } from '@/hooks/use-scroll-animation';
 
 interface Project {
   titleKey: string;
@@ -14,9 +15,10 @@ interface Project {
   images?: string[];
 }
 
-const ProjectCard = memo(({ project }: { project: Project }) => {
+const ProjectCard = memo(({ project, index }: { project: Project; index: number }) => {
   const { t } = useLanguage();
   const [currentImageIndex, setCurrentImageIndex] = useState(0);
+  const { ref, isVisible } = useScrollAnimation({ threshold: 0.1 });
 
   const isCarousel = project.images && project.images.length > 0;
   const currentImage = isCarousel ? project.images![currentImageIndex] : project.image;
@@ -39,8 +41,16 @@ const ProjectCard = memo(({ project }: { project: Project }) => {
 
   return (
     <div
-      className="group relative rounded-2xl bg-card border border-border/50 shadow-card overflow-hidden hover:border-primary/30 transition-all duration-300"
-      style={{ contain: 'layout style paint' }}
+      ref={ref as React.RefObject<HTMLDivElement>}
+      className={`group relative rounded-2xl bg-card border border-border/50 shadow-card overflow-hidden hover:border-primary/30 transition-all duration-500 ${
+        isVisible
+          ? 'opacity-100 translate-y-0'
+          : 'opacity-0 translate-y-8'
+      }`}
+      style={{ 
+        contain: 'layout style paint',
+        transitionDelay: `${index * 100}ms`,
+      }}
     >
       {/* Project Image with Carousel */}
       <div className="aspect-video bg-gradient-to-br from-primary/20 to-primary/5 flex items-center justify-center overflow-hidden relative">
@@ -235,7 +245,7 @@ export const ProjectsSection = () => {
           {/* Projects Grid */}
           <div className="grid gap-6 sm:gap-8 md:grid-cols-2" style={{ contain: 'layout' }}>
             {projects.map((project, index) => (
-              <ProjectCard key={`${project.titleKey}-${index}`} project={project} />
+              <ProjectCard key={`${project.titleKey}-${index}`} project={project} index={index} />
             ))}
           </div>
         </div>

@@ -98,10 +98,11 @@ export const HeroSection = () => {
       </div>
 
       {/* Scroll indicator */}
-      <div className="absolute bottom-8 left-1/2 -translate-x-1/2 animate-bounce">
+      <div className="absolute bottom-8 left-1/2 -translate-x-1/2 z-10">
         <button
           onClick={() => handleScrollToSection('#about')}
-          className="p-2 rounded-full border border-border/50 text-muted-foreground hover:text-foreground hover:border-border transition-colors"
+          className="p-2 rounded-full border border-border/50 text-muted-foreground hover:text-foreground hover:border-border transition-colors animate-bounce"
+          aria-label="Scroll to about section"
         >
           <ArrowDown className="h-5 w-5" />
         </button>

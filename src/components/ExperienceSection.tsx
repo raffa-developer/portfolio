@@ -1,5 +1,6 @@
 import { useLanguage } from '@/contexts/LanguageContext';
-import { Briefcase, Calendar, MapPin, ChevronRight } from 'lucide-react';
+import { Briefcase, Calendar, MapPin } from 'lucide-react';
+import { useEffect, useRef, useState } from 'react';
 
 interface Experience {
   titleKey: string;
@@ -11,8 +12,115 @@ interface Experience {
   skills: string[];
 }
 
+interface ExperienceCardProps {
+  exp: Experience;
+  index: number;
+}
+
+const ExperienceCard = ({ exp, index }: ExperienceCardProps) => {
+  const { t } = useLanguage();
+  const cardRef = useRef<HTMLDivElement>(null);
+  const [isVisible, setIsVisible] = useState(false);
+
+  useEffect(() => {
+    const observer = new IntersectionObserver(
+      ([entry]) => {
+        // Anima sempre que entrar na viewport
+        if (entry.isIntersecting) {
+          setIsVisible(true);
+        } else {
+          // Reset quando sair para animar novamente quando voltar
+          setIsVisible(false);
+        }
+      },
+      { 
+        threshold: 0.1,
+        rootMargin: '0px 0px -100px 0px' // Só anima quando está realmente visível
+      }
+    );
+
+    if (cardRef.current) {
+      observer.observe(cardRef.current);
+    }
+
+    return () => {
+      if (cardRef.current) {
+        observer.unobserve(cardRef.current);
+      }
+    };
+  }, []);
+
+  return (
+    <div className={`ml-14 sm:ml-16 md:ml-0 ${index % 2 === 0 ? 'md:mr-8' : 'md:ml-8'}`}>
+      <div
+        ref={cardRef}
+        className={`group relative p-4 sm:p-6 md:p-8 rounded-2xl bg-card border border-border/50 shadow-card hover:border-primary/40 hover:shadow-glow/20 transition-all duration-500 ${
+          isVisible
+            ? 'opacity-100 translate-y-0'
+            : 'opacity-0 translate-y-8'
+        }`}
+        style={{
+          transitionDuration: '600ms',
+          transitionTimingFunction: 'ease-out',
+        }}
+      >
+        {/* Header with badge */}
+        <div className="flex flex-wrap items-start justify-between gap-3 mb-4">
+          <div>
+            {exp.isCurrent && (
+              <span className="inline-flex items-center gap-1.5 px-3 py-1 mb-3 text-xs font-semibold rounded-full bg-green-500/10 text-green-500 border border-green-500/20">
+                <span className="w-1.5 h-1.5 rounded-full bg-green-500 animate-pulse" />
+                {t('experience.current')}
+              </span>
+            )}
+            <h3 className="font-heading text-lg sm:text-xl md:text-2xl font-bold text-foreground group-hover:text-primary transition-colors">
+              {t(exp.titleKey)}
+            </h3>
+          </div>
+        </div>
+
+        {/* Company and meta info */}
+        <div className="flex flex-col sm:flex-row sm:flex-wrap sm:items-center gap-2 sm:gap-4 mb-4 text-sm">
+          <div className="flex items-center gap-2 text-primary font-semibold">
+            <Briefcase className="h-4 w-4" />
+            <span>{t(exp.companyKey)}</span>
+          </div>
+          <div className="flex items-center gap-2 text-muted-foreground">
+            <Calendar className="h-4 w-4" />
+            <span>{t(exp.periodKey)}</span>
+          </div>
+          <div className="flex items-center gap-2 text-muted-foreground">
+            <MapPin className="h-4 w-4" />
+            <span>{exp.locationKey}</span>
+          </div>
+        </div>
+
+        {/* Description */}
+        <p className="text-sm sm:text-base text-muted-foreground leading-relaxed mb-4 sm:mb-5">
+          {t(exp.descriptionKey)}
+        </p>
+
+        {/* Skills tags */}
+        <div className="flex flex-wrap gap-2">
+          {exp.skills.map((skill, skillIndex) => (
+            <span
+              key={skillIndex}
+              className="px-3 py-1 text-xs font-medium rounded-full bg-primary/5 text-primary border border-primary/10 hover:bg-primary/10 transition-colors"
+            >
+              {skill}
+            </span>
+          ))}
+        </div>
+      </div>
+    </div>
+  );
+};
+
 export const ExperienceSection = () => {
   const { t } = useLanguage();
+  const sectionRef = useRef<HTMLElement>(null);
+  const timelineRef = useRef<HTMLDivElement>(null);
+  const [scrollProgress, setScrollProgress] = useState(0);
 
   const experiences: Experience[] = [
     {
@@ -35,8 +143,39 @@ export const ExperienceSection = () => {
     },
   ];
 
+  useEffect(() => {
+    const handleScroll = () => {
+      if (!sectionRef.current || !timelineRef.current) return;
+
+      const section = sectionRef.current;
+      const rect = section.getBoundingClientRect();
+      const windowHeight = window.innerHeight;
+      
+      // Calculate scroll progress within the section
+      const sectionTop = rect.top;
+      const sectionHeight = rect.height;
+      const scrollPosition = window.scrollY;
+      const sectionStart = scrollPosition + sectionTop - windowHeight;
+      const sectionEnd = sectionStart + sectionHeight + windowHeight;
+      
+      // Progress from 0 to 1
+      const progress = Math.max(0, Math.min(1, (window.scrollY - sectionStart) / (sectionEnd - sectionStart)));
+      setScrollProgress(progress);
+    };
+
+    window.addEventListener('scroll', handleScroll, { passive: true });
+    handleScroll(); // Initial calculation
+
+    return () => {
+      window.removeEventListener('scroll', handleScroll);
+    };
+  }, []);
+
+  // Calculate gradient stop position based on scroll progress
+  const gradientStop = Math.min(100, 30 + scrollProgress * 50); // Start at 30%, go to 80%
+
   return (
-    <section id="experience" className="py-20 md:py-32 bg-secondary/30">
+    <section ref={sectionRef} id="experience" className="py-20 md:py-32 bg-secondary/30">
       <div className="container mx-auto px-4 sm:px-6 lg:px-8">
         <div className="max-w-5xl mx-auto">
           {/* Section Header */}
@@ -50,9 +189,20 @@ export const ExperienceSection = () => {
           </div>
 
           {/* Timeline */}
-          <div className="relative">
-            {/* Main timeline line */}
-            <div className="absolute left-6 md:left-1/2 top-0 bottom-0 w-0.5 bg-gradient-to-b from-primary via-primary/50 to-border md:-translate-x-1/2" />
+          <div ref={timelineRef} className="relative">
+            {/* Main timeline line with animated gradient */}
+            <div
+              className="absolute left-6 md:left-1/2 top-0 bottom-0 w-0.5 md:-translate-x-1/2"
+              style={{
+                background: `linear-gradient(to bottom, 
+                  hsl(var(--primary)) 0%, 
+                  hsl(var(--primary)) ${gradientStop}%, 
+                  hsl(var(--primary) / 0.5) ${Math.min(100, gradientStop + 10)}%, 
+                  hsl(var(--border)) ${Math.min(100, gradientStop + 20)}%, 
+                  hsl(var(--border)) 100%)`,
+                transition: 'background 0.1s ease-out',
+              }}
+            />
 
             {experiences.map((exp, index) => (
               <div
@@ -78,62 +228,7 @@ export const ExperienceSection = () => {
                 </div>
 
                 {/* Content card */}
-                <div className={`ml-14 sm:ml-16 md:ml-0 ${index % 2 === 0 ? 'md:mr-8' : 'md:ml-8'}`}>
-                  <div className="group relative p-4 sm:p-6 md:p-8 rounded-2xl bg-card border border-border/50 shadow-card hover:border-primary/40 hover:shadow-glow/20 transition-all duration-500">
-                    {/* Decorative corner */}
-                    <div className={`absolute top-8 hidden md:block ${index % 2 === 0 ? '-right-3' : '-left-3'}`}>
-                      <ChevronRight className={`w-6 h-6 text-border group-hover:text-primary/40 transition-colors ${index % 2 === 0 ? '' : 'rotate-180'}`} />
-                    </div>
-
-                    {/* Header with badge */}
-                    <div className="flex flex-wrap items-start justify-between gap-3 mb-4">
-                      <div>
-                        {exp.isCurrent && (
-                          <span className="inline-flex items-center gap-1.5 px-3 py-1 mb-3 text-xs font-semibold rounded-full bg-green-500/10 text-green-500 border border-green-500/20">
-                            <span className="w-1.5 h-1.5 rounded-full bg-green-500 animate-pulse" />
-                            {t('experience.current')}
-                          </span>
-                        )}
-                        <h3 className="font-heading text-lg sm:text-xl md:text-2xl font-bold text-foreground group-hover:text-primary transition-colors">
-                          {t(exp.titleKey)}
-                        </h3>
-                      </div>
-                    </div>
-
-                    {/* Company and meta info */}
-                    <div className="flex flex-col sm:flex-row sm:flex-wrap sm:items-center gap-2 sm:gap-4 mb-4 text-sm">
-                      <div className="flex items-center gap-2 text-primary font-semibold">
-                        <Briefcase className="h-4 w-4" />
-                        <span>{t(exp.companyKey)}</span>
-                      </div>
-                      <div className="flex items-center gap-2 text-muted-foreground">
-                        <Calendar className="h-4 w-4" />
-                        <span>{t(exp.periodKey)}</span>
-                      </div>
-                      <div className="flex items-center gap-2 text-muted-foreground">
-                        <MapPin className="h-4 w-4" />
-                        <span>{exp.locationKey}</span>
-                      </div>
-                    </div>
-
-                    {/* Description */}
-                    <p className="text-sm sm:text-base text-muted-foreground leading-relaxed mb-4 sm:mb-5">
-                      {t(exp.descriptionKey)}
-                    </p>
-
-                    {/* Skills tags */}
-                    <div className="flex flex-wrap gap-2">
-                      {exp.skills.map((skill, skillIndex) => (
-                        <span
-                          key={skillIndex}
-                          className="px-3 py-1 text-xs font-medium rounded-full bg-primary/5 text-primary border border-primary/10 hover:bg-primary/10 transition-colors"
-                        >
-                          {skill}
-                        </span>
-                      ))}
-                    </div>
-                  </div>
-                </div>
+                <ExperienceCard exp={exp} index={index} />
               </div>
             ))}
 
