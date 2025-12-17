@@ -20,7 +20,7 @@ const translations: Record<Language, Record<string, string>> = {
     // Hero
     'hero.greeting': "Hi, I'm",
     'hero.role': 'Full-Stack Developer',
-    'hero.description': 'Building modern web solutions trough logic and code. Specialized in C#, ASP.NET, and JavaScript ecosystems.',
+    'hero.description': 'Building modern web solutions trough logic and code. Specialized in C#, Java, .NET, and JavaScript ecosystems.',
     'hero.cta.projects': 'View Projects',
     'hero.cta.contact': 'Get in Touch',
     
@@ -32,6 +32,14 @@ const translations: Record<Language, Record<string, string>> = {
     'about.stat.experience': 'Years Experience',
     'about.stat.projects': 'Projects Completed',
     'about.stat.technologies': 'Technologies',
+    'about.personal.button': 'Get to know me personally',
+    'about.personal.title': 'Beyond the Code',
+    'about.personal.description': "When I'm not coding, you'll find me exploring new technologies, playing video games, watching football or just enjoying time with friends and family. I believe in continuous learning and personal growth.",
+    'about.personal.hobby1': 'Gaming enthusiast',
+    'about.personal.hobby2': 'Always learning something new',
+    'about.personal.hobby3': 'Music lover',
+    'about.personal.hobby4': 'F.C. Porto fan',
+    'about.personal.back': 'Back to professional',
     
     // Skills
     'skills.title': 'Skills & Expertise',
@@ -105,6 +113,14 @@ const translations: Record<Language, Record<string, string>> = {
     'about.stat.experience': 'Anos de Experiência',
     'about.stat.projects': 'Projetos Concluídos',
     'about.stat.technologies': 'Tecnologias',
+    'about.personal.button': 'Conhece-me pessoalmente',
+    'about.personal.title': 'Para Além do Código',
+    'about.personal.description': 'Quando não estou a programar, podes encontrar-me a explorar novas tecnologias, a jogar videojogos, a ver futebol ou a passar tempo com amigos e família. Acredito na aprendizagem contínua e no crescimento pessoal.',
+    'about.personal.hobby1': 'Entusiasta por videojogos',
+    'about.personal.hobby2': 'Sempre a aprender algo novo',
+    'about.personal.hobby3': 'Amante de música',
+    'about.personal.hobby4': 'Fã do F.C. Porto',
+    'about.personal.back': 'Voltar ao profissional',
     
     // Skills
     'skills.title': 'Habilidades',
@@ -177,6 +193,14 @@ const translations: Record<Language, Record<string, string>> = {
     'about.stat.experience': 'Años de Experiencia',
     'about.stat.projects': 'Proyectos Completados',
     'about.stat.technologies': 'Tecnologías',
+    'about.personal.button': 'Conóceme personalmente',
+    'about.personal.title': 'Más Allá del Código',
+    'about.personal.description': 'Cuando no estoy programando, me encontrarás explorando nuevas tecnologías, jugando videojuegos, viendo fútbol o disfrutando tiempo con amigos y familia. Creo en el aprendizaje continuo y el crecimiento personal.',
+    'about.personal.hobby1': 'Entusiasta de los videojuegos',
+    'about.personal.hobby2': 'Siempre aprendiendo algo nuevo',
+    'about.personal.hobby3': 'Amante de la música',
+    'about.personal.hobby4': 'Fan del F.C. Porto',
+    'about.personal.back': 'Volver al profesional',
     
     // Skills
     'skills.title': 'Habilidades y Experiencia',
@@ -249,6 +273,14 @@ const translations: Record<Language, Record<string, string>> = {
     'about.stat.experience': "Années d'Expérience",
     'about.stat.projects': 'Projets Réalisés',
     'about.stat.technologies': 'Technologies',
+    'about.personal.button': 'Apprenez à me connaître',
+    'about.personal.title': 'Au-delà du Code',
+    'about.personal.description': 'Quand je ne code pas, vous me trouverez en train d\'explorer de nouvelles technologies, de jouer aux jeux vidéo, de regarder le football ou de passer du temps avec mes amis et ma famille. Je crois en l\'apprentissage continu et au développement personnel.',
+    'about.personal.hobby1': 'Passionné de jeux vidéo',
+    'about.personal.hobby2': 'Toujours en train d\'apprendre',
+    'about.personal.hobby3': 'Amateur de musique',
+    'about.personal.hobby4': 'Fan du F.C. Porto',
+    'about.personal.back': 'Retour au professionnel',
     
     // Skills
     'skills.title': 'Compétences & Expertise',
