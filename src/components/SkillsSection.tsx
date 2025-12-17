@@ -23,9 +23,16 @@ const SkillCard = ({
   const cardRef = useRef<HTMLDivElement>(null);
   const [mousePosition, setMousePosition] = useState<MousePosition>({ x: 0, y: 0 });
   const [isHovered, setIsHovered] = useState(false);
+  const lastUpdateRef = useRef(0);
 
   const handleMouseMove = useCallback((e: React.MouseEvent<HTMLDivElement>) => {
     if (!cardRef.current) return;
+    
+    // Throttle mouse updates to ~30fps for better performance
+    const now = Date.now();
+    if (now - lastUpdateRef.current < 33) return; // ~30fps
+    lastUpdateRef.current = now;
+    
     const rect = cardRef.current.getBoundingClientRect();
     setMousePosition({
       x: e.clientX - rect.left,
@@ -45,13 +52,15 @@ const SkillCard = ({
       className="group relative p-6 lg:p-8 rounded-xl bg-card border border-border/50 hover:border-primary/20 transition-all duration-300 overflow-hidden"
       style={{ animationDelay: `${categoryIndex * 0.1}s` }}
     >
-      {/* Mouse tracking glow effect */}
+      {/* Mouse tracking glow effect - optimized */}
       <div
         className="pointer-events-none absolute -inset-px rounded-xl opacity-0 group-hover:opacity-100 transition-opacity duration-500"
         style={{
           background: isHovered
             ? `radial-gradient(500px circle at ${mousePosition.x}px ${mousePosition.y}px, hsl(var(--primary) / 0.08), transparent 40%)`
             : 'none',
+          willChange: isHovered ? 'opacity, background' : 'auto',
+          transform: 'translateZ(0)', // GPU acceleration
         }}
       />
       

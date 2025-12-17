@@ -95,6 +95,8 @@ export const IntroAnimation = ({ onComplete }: IntroAnimationProps) => {
             background: 'radial-gradient(circle, rgba(30, 58, 138, 0.15) 0%, transparent 60%)',
             left: '-30%',
             top: '-40%',
+            willChange: 'transform',
+            transform: 'translateZ(0)',
           }}
         />
         <div 
@@ -103,6 +105,8 @@ export const IntroAnimation = ({ onComplete }: IntroAnimationProps) => {
             background: 'radial-gradient(circle, rgba(30, 27, 75, 0.2) 0%, transparent 60%)',
             right: '-25%',
             bottom: '-30%',
+            willChange: 'transform',
+            transform: 'translateZ(0)',
           }}
         />
       </div>
@@ -160,15 +164,15 @@ export const IntroAnimation = ({ onComplete }: IntroAnimationProps) => {
 
       <style>{`
         @keyframes orb-float-1 {
-          0%, 100% { transform: translate(0, 0) scale(1); }
-          33% { transform: translate(40px, -30px) scale(1.03); }
-          66% { transform: translate(-30px, 40px) scale(0.97); }
+          0%, 100% { transform: translate3d(0, 0, 0) scale(1); }
+          33% { transform: translate3d(40px, -30px, 0) scale(1.03); }
+          66% { transform: translate3d(-30px, 40px, 0) scale(0.97); }
         }
         
         @keyframes orb-float-2 {
-          0%, 100% { transform: translate(0, 0) scale(1); }
-          33% { transform: translate(-50px, 30px) scale(1.05); }
-          66% { transform: translate(35px, -45px) scale(0.95); }
+          0%, 100% { transform: translate3d(0, 0, 0) scale(1); }
+          33% { transform: translate3d(-50px, 30px, 0) scale(1.05); }
+          66% { transform: translate3d(35px, -45px, 0) scale(0.95); }
         }
         
         .animate-orb-1 {

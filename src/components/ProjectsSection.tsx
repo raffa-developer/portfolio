@@ -1,7 +1,7 @@
 import { useLanguage } from '@/contexts/LanguageContext';
 import { ExternalLink, Github, Construction, ChevronLeft, ChevronRight } from 'lucide-react';
 import { Button } from '@/components/ui/button';
-import { useState } from 'react';
+import { useState, memo, useCallback } from 'react';
 
 interface Project {
   titleKey: string;
@@ -14,9 +14,176 @@ interface Project {
   images?: string[];
 }
 
+const ProjectCard = memo(({ project }: { project: Project }) => {
+  const { t } = useLanguage();
+  const [currentImageIndex, setCurrentImageIndex] = useState(0);
+
+  const isCarousel = project.images && project.images.length > 0;
+  const currentImage = isCarousel ? project.images![currentImageIndex] : project.image;
+
+  const handlePrev = useCallback(() => {
+    if (isCarousel && project.images) {
+      setCurrentImageIndex((prev) =>
+        prev === 0 ? project.images!.length - 1 : prev - 1
+      );
+    }
+  }, [isCarousel, project.images]);
+
+  const handleNext = useCallback(() => {
+    if (isCarousel && project.images) {
+      setCurrentImageIndex((prev) =>
+        prev === project.images!.length - 1 ? 0 : prev + 1
+      );
+    }
+  }, [isCarousel, project.images]);
+
+  return (
+    <div
+      className="group relative rounded-2xl bg-card border border-border/50 shadow-card overflow-hidden hover:border-primary/30 transition-all duration-300"
+      style={{ contain: 'layout style paint' }}
+    >
+      {/* Project Image with Carousel */}
+      <div className="aspect-video bg-gradient-to-br from-primary/20 to-primary/5 flex items-center justify-center overflow-hidden relative">
+        {currentImage ? (
+          <>
+            <img
+              key={currentImage}
+              src={currentImage}
+              alt={t(project.titleKey)}
+              loading="lazy"
+              decoding="async"
+              className="w-full h-full object-cover transition-opacity duration-300"
+              style={{ 
+                willChange: 'opacity',
+                transform: 'translateZ(0)', // GPU acceleration
+                imageRendering: 'auto',
+              }}
+            />
+
+            {/* Carousel Controls */}
+            {isCarousel && (
+              <>
+                <button
+                  onClick={handlePrev}
+                  className="absolute left-2 top-1/2 -translate-y-1/2 p-2 sm:p-2 rounded-full bg-black/50 hover:bg-black/70 transition-colors opacity-100 sm:opacity-0 sm:group-hover:opacity-100"
+                >
+                  <ChevronLeft className="h-5 w-5 sm:h-4 sm:w-4 text-white" />
+                </button>
+
+                <button
+                  onClick={handleNext}
+                  className="absolute right-2 top-1/2 -translate-y-1/2 p-2 sm:p-2 rounded-full bg-black/50 hover:bg-black/70 transition-colors opacity-100 sm:opacity-0 sm:group-hover:opacity-100"
+                >
+                  <ChevronRight className="h-5 w-5 sm:h-4 sm:w-4 text-white" />
+                </button>
+
+                <div className="absolute bottom-2 left-1/2 -translate-x-1/2 flex gap-1 opacity-100 sm:opacity-0 sm:group-hover:opacity-100 transition-opacity">
+                  {project.images!.map((_, i) => (
+                    <div
+                      key={i}
+                      className={`h-1.5 rounded-full transition-all ${
+                        i === currentImageIndex
+                          ? 'w-6 bg-white'
+                          : 'w-1.5 bg-white/50'
+                      }`}
+                    />
+                  ))}
+                </div>
+              </>
+            )}
+          </>
+        ) : project.inDevelopment ? (
+          <div className="text-center">
+            <Construction className="h-12 w-12 mx-auto mb-2 text-primary animate-pulse" />
+            <span className="text-sm text-muted-foreground">
+              {t('projects.inDevelopment')}
+            </span>
+          </div>
+        ) : (
+          <div className="w-20 h-20 rounded-xl bg-gradient-primary flex items-center justify-center shadow-glow">
+            <span className="font-heading text-2xl font-bold text-primary-foreground">
+              {t(project.titleKey).charAt(0)}
+            </span>
+          </div>
+        )}
+      </div>
+
+      {/* Content */}
+      <div className="p-4 sm:p-6">
+        {/* Status badge */}
+        {project.inDevelopment && (
+          <span className="inline-block px-3 py-1 mb-3 text-xs font-medium rounded-full bg-accent/50 text-accent-foreground border border-primary/20">
+            {t('projects.inDevelopment')}
+          </span>
+        )}
+
+        {/* Title */}
+        <h3 className="font-heading text-xl font-semibold text-foreground mb-2 group-hover:text-primary transition-colors">
+          {t(project.titleKey)}
+        </h3>
+
+        {/* Description */}
+        <p className="text-muted-foreground mb-4 line-clamp-6">
+          {t(project.descriptionKey)}
+        </p>
+
+        {/* Technologies */}
+        <div className="flex flex-wrap gap-2 mb-4">
+          {project.technologies.map((tech) => (
+            <span
+              key={tech}
+              className="px-2 py-1 text-xs rounded-md bg-secondary text-secondary-foreground"
+            >
+              {tech}
+            </span>
+          ))}
+        </div>
+
+        {/* Links */}
+        <div className="flex gap-3">
+          {project.githubUrl && (
+            <Button
+              variant="outline"
+              size="sm"
+              asChild
+              className="border-border/50 text-primary hover:border-primary/50 hover:bg-primary/5 hover:text-primary transition-all"
+            >
+              <a
+                href={project.githubUrl}
+                target="_blank"
+                rel="noopener noreferrer"
+              >
+                <Github className="h-4 w-4 mr-2" />
+                {t('projects.viewCode')}
+              </a>
+            </Button>
+          )}
+          {project.liveUrl && (
+            <Button
+              size="sm"
+              asChild
+              className="bg-primary/10 text-primary border border-primary/30 hover:bg-primary/20 hover:border-primary/50 transition-all"
+            >
+              <a
+                href={project.liveUrl}
+                target="_blank"
+                rel="noopener noreferrer"
+              >
+                <ExternalLink className="h-4 w-4 mr-2" />
+                {t('projects.viewLive')}
+              </a>
+            </Button>
+          )}
+        </div>
+      </div>
+    </div>
+  );
+});
+
+ProjectCard.displayName = 'ProjectCard';
+
 export const ProjectsSection = () => {
   const { t } = useLanguage();
-  const [carouselIndices, setCarouselIndices] = useState<{ [key: number]: number }>({});
 
   const projects: Project[] = [
     {
@@ -66,167 +233,10 @@ export const ProjectsSection = () => {
           </div>
 
           {/* Projects Grid */}
-          <div className="grid gap-6 sm:gap-8 md:grid-cols-2">
-            {projects.map((project, index) => {
-              const isCarousel = project.images && project.images.length > 0;
-              const currentImageIndex = isCarousel ? (carouselIndices[index] || 0) : 0;
-              const currentImage = isCarousel ? project.images[currentImageIndex] : project.image;
-
-              const handlePrev = () => {
-                if (isCarousel) {
-                  setCarouselIndices((prev) => {
-                    const current = prev[index] ?? 0;
-                    return {
-                      ...prev,
-                      [index]: current === 0 ? project.images!.length - 1 : current - 1,
-                    };
-                  });
-                }
-              };
-
-              const handleNext = () => {
-                if (isCarousel) {
-                  setCarouselIndices((prev) => {
-                    const current = prev[index] ?? 0;
-                    return {
-                      ...prev,
-                      [index]: current === project.images!.length - 1 ? 0 : current + 1,
-                    };
-                  });
-                }
-              };
-
-              return (
-              <div
-                key={index}
-                className="group relative rounded-2xl bg-card border border-border/50 shadow-card overflow-hidden hover:border-primary/30 transition-all duration-300"
-              >
-                {/* Project Image with Carousel */}
-                <div className="aspect-video bg-gradient-to-br from-primary/20 to-primary/5 flex items-center justify-center overflow-hidden relative">
-                  {currentImage ? (
-                    <>
-                      <img
-                        src={currentImage}
-                        alt={t(project.titleKey)}
-                        className="w-full h-full object-cover"
-                      />
-                      {/* Carousel Controls */}
-                      {isCarousel && (
-                        <>
-                          <button
-                            onClick={handlePrev}
-                            className="absolute left-2 top-1/2 -translate-y-1/2 p-2 sm:p-2 rounded-full bg-black/50 hover:bg-black/70 transition-colors opacity-100 sm:opacity-0 sm:group-hover:opacity-100"
-                          >
-                            <ChevronLeft className="h-5 w-5 sm:h-4 sm:w-4 text-white" />
-                          </button>
-                          <button
-                            onClick={handleNext}
-                            className="absolute right-2 top-1/2 -translate-y-1/2 p-2 sm:p-2 rounded-full bg-black/50 hover:bg-black/70 transition-colors opacity-100 sm:opacity-0 sm:group-hover:opacity-100"
-                          >
-                            <ChevronRight className="h-5 w-5 sm:h-4 sm:w-4 text-white" />
-                          </button>
-                          <div className="absolute bottom-2 left-1/2 -translate-x-1/2 flex gap-1 opacity-100 sm:opacity-0 sm:group-hover:opacity-100 transition-opacity">
-                            {project.images!.map((_, i) => (
-                              <div
-                                key={i}
-                                className={`h-1.5 rounded-full transition-all ${
-                                  i === currentImageIndex
-                                    ? 'w-6 bg-white'
-                                    : 'w-1.5 bg-white/50'
-                                }`}
-                              />
-                            ))}
-                          </div>
-                        </>
-                      )}
-                    </>
-                  ) : project.inDevelopment ? (
-                    <div className="text-center">
-                      <Construction className="h-12 w-12 mx-auto mb-2 text-primary animate-pulse" />
-                      <span className="text-sm text-muted-foreground">
-                        {t('projects.inDevelopment')}
-                      </span>
-                    </div>
-                  ) : (
-                    <div className="w-20 h-20 rounded-xl bg-gradient-primary flex items-center justify-center shadow-glow">
-                      <span className="font-heading text-2xl font-bold text-primary-foreground">
-                        {t(project.titleKey).charAt(0)}
-                      </span>
-                    </div>
-                  )}
-                </div>
-
-                {/* Content */}
-                <div className="p-4 sm:p-6">
-                  {/* Status badge */}
-                  {project.inDevelopment && (
-                    <span className="inline-block px-3 py-1 mb-3 text-xs font-medium rounded-full bg-accent/50 text-accent-foreground border border-primary/20">
-                      {t('projects.inDevelopment')}
-                    </span>
-                  )}
-
-                  {/* Title */}
-                  <h3 className="font-heading text-xl font-semibold text-foreground mb-2 group-hover:text-primary transition-colors">
-                    {t(project.titleKey)}
-                  </h3>
-
-                  {/* Description */}
-                  <p className="text-muted-foreground mb-4 line-clamp-6">
-                    {t(project.descriptionKey)}
-                  </p>
-
-                  {/* Technologies */}
-                  <div className="flex flex-wrap gap-2 mb-4">
-                    {project.technologies.map((tech) => (
-                      <span
-                        key={tech}
-                        className="px-2 py-1 text-xs rounded-md bg-secondary text-secondary-foreground"
-                      >
-                        {tech}
-                      </span>
-                    ))}
-                  </div>
-
-                  {/* Links */}
-                  <div className="flex gap-3">
-                    {project.githubUrl && (
-                      <Button
-                        variant="outline"
-                        size="sm"
-                        asChild
-                        className="border-border/50 text-primary hover:border-primary/50 hover:bg-primary/5 transition-all"
-                      >
-                        <a
-                          href={project.githubUrl}
-                          target="_blank"
-                          rel="noopener noreferrer"
-                        >
-                          <Github className="h-4 w-4 mr-2" />
-                          {t('projects.viewCode')}
-                        </a>
-                      </Button>
-                    )}
-                    {project.liveUrl && (
-                      <Button
-                        size="sm"
-                        asChild
-                        className="bg-primary/10 text-primary border border-primary/30 hover:bg-primary/20 hover:border-primary/50 transition-all"
-                      >
-                        <a
-                          href={project.liveUrl}
-                          target="_blank"
-                          rel="noopener noreferrer"
-                        >
-                          <ExternalLink className="h-4 w-4 mr-2" />
-                          {t('projects.viewLive')}
-                        </a>
-                      </Button>
-                    )}
-                  </div>
-                </div>
-              </div>
-              );
-            })}
+          <div className="grid gap-6 sm:gap-8 md:grid-cols-2" style={{ contain: 'layout' }}>
+            {projects.map((project, index) => (
+              <ProjectCard key={`${project.titleKey}-${index}`} project={project} />
+            ))}
           </div>
         </div>
       </div>
