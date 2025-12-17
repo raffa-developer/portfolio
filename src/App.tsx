@@ -8,6 +8,7 @@ import { LanguageProvider } from "@/contexts/LanguageContext";
 import { MouseGlow } from "@/components/MouseGlow";
 import Index from "./pages/Index";
 import NotFound from "./pages/NotFound";
+import { Analytics } from "@vercel/analytics/next"
 
 const queryClient = new QueryClient();
 
@@ -17,6 +18,7 @@ const App = () => (
       <LanguageProvider>
         <TooltipProvider>
           <MouseGlow />
+          <Analytics/>
           <Toaster />
           <Sonner />
           <BrowserRouter>
