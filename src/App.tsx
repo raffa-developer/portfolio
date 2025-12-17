@@ -9,6 +9,7 @@ import { MouseGlow } from "@/components/MouseGlow";
 import Index from "./pages/Index";
 import NotFound from "./pages/NotFound";
 import { Analytics } from "@vercel/analytics/react"
+import { SpeedInsights } from "@vercel/speed-insights/react"
 
 const queryClient = new QueryClient();
 
@@ -19,6 +20,7 @@ const App = () => (
         <TooltipProvider>
           <MouseGlow />
           <Analytics/>
+          <SpeedInsights/>
           <Toaster />
           <Sonner />
           <BrowserRouter>
