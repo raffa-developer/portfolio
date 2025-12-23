@@ -109,7 +109,7 @@ export const SkillsSection = () => {
     {
       title: t('skills.backend'),
       icon: <Code2 className="w-5 h-5" />,
-      skills: ['C#', '.NET', 'ASP.NET', 'PHP', 'Java', 'REST APIs', 'Node.js'],
+      skills: ['C#', '.NET', 'ASP.NET', 'PHP', 'Java', 'Node.js', 'REST APIs'],
     },
     {
       title: t('skills.frontend'),

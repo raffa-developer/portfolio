@@ -89,6 +89,12 @@ const translations: Record<Language, Record<string, string>> = {
     
     // Footer
     'footer.rights': 'All rights reserved.',
+    'footer.christmas': 'Merry Christmas!',
+    // Theme
+    'theme.variant': 'Theme',
+    'theme.colorMode': 'Color Mode',
+    'theme.lightMode': 'Light Mode',
+    'theme.darkMode': 'Dark Mode',
   },
   pt: {
     // Navigation
@@ -169,6 +175,13 @@ const translations: Record<Language, Record<string, string>> = {
     
     // Footer
     'footer.rights': 'Todos os direitos reservados.',
+    'footer.christmas': 'Feliz Natal!',
+    
+    // Theme
+    'theme.variant': 'Tema',
+    'theme.colorMode': 'Modo de Cor',
+    'theme.lightMode': 'Modo Claro',
+    'theme.darkMode': 'Modo Escuro',
   },
   es: {
     // Navigation
@@ -249,6 +262,13 @@ const translations: Record<Language, Record<string, string>> = {
     
     // Footer
     'footer.rights': 'Todos los derechos reservados.',
+    'footer.christmas': 'Feliz Navidad!',
+    
+    // Theme
+    'theme.variant': 'Tema',
+    'theme.colorMode': 'Modo de Color',
+    'theme.lightMode': 'Modo Claro',
+    'theme.darkMode': 'Modo Oscuro',
   },
   fr: {
     // Navigation
@@ -329,6 +349,13 @@ const translations: Record<Language, Record<string, string>> = {
     
     // Footer
     'footer.rights': 'Tous droits réservés.',
+    'footer.christmas': 'Joyeux Noël!',
+    
+    // Theme
+    'theme.variant': 'Thème',
+    'theme.colorMode': 'Mode de Couleur',
+    'theme.lightMode': 'Mode Clair',
+    'theme.darkMode': 'Mode Sombre',
   },
 };
 

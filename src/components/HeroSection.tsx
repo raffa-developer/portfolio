@@ -1,9 +1,11 @@
 import { useLanguage } from '@/contexts/LanguageContext';
+import { useChristmas } from '@/contexts/ThemeContext';
 import { Button } from '@/components/ui/button';
-import { Github, Linkedin, ArrowDown } from 'lucide-react';
+import { Github, Linkedin, ArrowDown, Sparkles } from 'lucide-react';
 
 export const HeroSection = () => {
   const { t } = useLanguage();
+  const { isChristmasSeason } = useChristmas();
 
   const handleScrollToSection = (sectionId: string) => {
     const element = document.querySelector(sectionId);
@@ -30,6 +32,41 @@ export const HeroSection = () => {
           className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[800px] h-[800px] border border-primary/5 rounded-full" 
           style={{ transform: 'translate3d(-50%, -50%, 0)' }}
         />
+        
+        {/* Christmas decorations */}
+        {isChristmasSeason && (
+          <>
+            {/* Christmas gradient orbs */}
+            <div 
+              className="absolute top-1/3 left-1/4 w-64 h-64 bg-red-500/20 rounded-full blur-3xl animate-float" 
+              style={{ animationDelay: '-1s', willChange: 'transform', transform: 'translateZ(0)' }}
+            />
+            <div 
+              className="absolute bottom-1/3 right-1/4 w-80 h-80 bg-green-500/20 rounded-full blur-3xl animate-float" 
+              style={{ animationDelay: '-2s', willChange: 'transform', transform: 'translateZ(0)' }}
+            />
+            {/* Floating sparkles */}
+            {[...Array(6)].map((_, i) => (
+              <div
+                key={`hero-sparkle-${i}`}
+                className="absolute animate-twinkle"
+                style={{
+                  left: `${20 + i * 15}%`,
+                  top: `${30 + (i % 3) * 20}%`,
+                  animationDelay: `${i * 0.5}s`,
+                  animationDuration: `${2 + (i % 2)}s`,
+                }}
+              >
+                <Sparkles
+                  className="h-6 w-6 text-yellow-300 opacity-70"
+                  style={{
+                    filter: 'drop-shadow(0 0 6px rgba(255, 215, 0, 0.8))',
+                  }}
+                />
+              </div>
+            ))}
+          </>
+        )}
       </div>
 
       <div className="container mx-auto px-4 sm:px-6 lg:px-8 relative z-10">

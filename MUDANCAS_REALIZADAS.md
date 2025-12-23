@@ -133,3 +133,6 @@ Animações suaves em todas as seções que aparecem quando você rola a página
 ✅ Interface mais polida e profissional  
 ✅ Performance otimizada para todos os dispositivos  
 
+
+
+

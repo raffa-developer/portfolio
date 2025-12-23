@@ -1,13 +1,15 @@
 import { useState, useEffect } from 'react';
-import { Menu, X, Moon, Sun, Globe } from 'lucide-react';
+import { Menu, X, Moon, Sun, Globe, Palette } from 'lucide-react';
 import { useLanguage, Language } from '@/contexts/LanguageContext';
-import { useTheme } from '@/contexts/ThemeContext';
+import { useTheme, ThemeVariant } from '@/contexts/ThemeContext';
 import { Button } from '@/components/ui/button';
 import {
   DropdownMenu,
   DropdownMenuContent,
   DropdownMenuItem,
   DropdownMenuTrigger,
+  DropdownMenuSeparator,
+  DropdownMenuLabel,
 } from '@/components/ui/dropdown-menu';
 import 'flag-icons/css/flag-icons.min.css';
 
@@ -22,7 +24,22 @@ export const Navigation = () => {
   const [isOpen, setIsOpen] = useState(false);
   const [isScrolled, setIsScrolled] = useState(false);
   const { language, setLanguage, t } = useLanguage();
-  const { theme, toggleTheme } = useTheme();
+  const { colorTheme, themeVariant, toggleColorTheme, setThemeVariant, availableVariants } = useTheme();
+
+  const themeVariantLabels: Record<ThemeVariant, Record<Language, string>> = {
+    default: {
+      en: 'Default',
+      pt: 'Padrão',
+      es: 'Por defecto',
+      fr: 'Par défaut',
+    },
+    christmas: {
+      en: 'Christmas Theme',
+      pt: 'Tema Natal',
+      es: 'Tema Navidad',
+      fr: 'Tema Noël',
+    },
+  };
 
   useEffect(() => {
     const handleScroll = () => {
@@ -112,19 +129,43 @@ export const Navigation = () => {
               </DropdownMenuContent>
             </DropdownMenu>
 
-            {/* Theme Toggle */}
-            <Button
-              variant="ghost"
-              size="icon"
-              onClick={toggleTheme}
-              className="h-9 w-9"
-            >
-              {theme === 'dark' ? (
-                <Sun className="h-4 w-4" />
-              ) : (
-                <Moon className="h-4 w-4" />
-              )}
-            </Button>
+            {/* Theme Variant Selector */}
+            <DropdownMenu>
+              <DropdownMenuTrigger asChild>
+                <Button variant="ghost" size="icon" className="h-9 w-9">
+                  <Palette className="h-4 w-4" />
+                </Button>
+              </DropdownMenuTrigger>
+              <DropdownMenuContent align="end" className="min-w-[180px]">
+                <DropdownMenuLabel>{t('theme.variant')}</DropdownMenuLabel>
+                <DropdownMenuSeparator />
+                {availableVariants.map((variant) => (
+                  <DropdownMenuItem
+                    key={variant}
+                    onClick={() => setThemeVariant(variant)}
+                    className={themeVariant === variant ? 'bg-accent' : ''}
+                  >
+                    <span className="mr-2">{variant === 'christmas' ? '🎄' : '🎨'}</span>
+                    {themeVariantLabels[variant][language]}
+                  </DropdownMenuItem>
+                ))}
+                <DropdownMenuSeparator />
+                <DropdownMenuLabel>{t('theme.colorMode')}</DropdownMenuLabel>
+                <DropdownMenuItem onClick={toggleColorTheme}>
+                  {colorTheme === 'dark' ? (
+                    <>
+                      <Sun className="h-4 w-4 mr-2" />
+                      {t('theme.lightMode')}
+                    </>
+                  ) : (
+                    <>
+                      <Moon className="h-4 w-4 mr-2" />
+                      {t('theme.darkMode')}
+                    </>
+                  )}
+                </DropdownMenuItem>
+              </DropdownMenuContent>
+            </DropdownMenu>
 
             {/* Mobile Menu Button */}
             <Button
@@ -140,7 +181,7 @@ export const Navigation = () => {
 
         {/* Mobile Navigation */}
         <div
-          className={`md:hidden overflow-hidden transition-all duration-300 bg-background/80 backdrop-blur-lg ${
+          className={`md:hidden overflow-hidden transition-all duration-300 bg-background/80 backdrop-blur-lg relative z-50 ${
             isOpen ? 'max-h-80 pb-4' : 'max-h-0'
           }`}
         >

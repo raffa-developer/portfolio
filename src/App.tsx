@@ -6,8 +6,10 @@ import { BrowserRouter, Routes, Route } from "react-router-dom";
 import { ThemeProvider } from "@/contexts/ThemeContext";
 import { LanguageProvider } from "@/contexts/LanguageContext";
 import { MouseGlow } from "@/components/MouseGlow";
+import { ChristmasDecorations } from "@/components/ChristmasDecorations";
 import Index from "./pages/Index";
 import NotFound from "./pages/NotFound";
+import Snowfall from "react-snowfall"
 import { Analytics } from "@vercel/analytics/react"
 import { SpeedInsights } from "@vercel/speed-insights/react"
 
@@ -18,6 +20,8 @@ const App = () => (
     <ThemeProvider>
       <LanguageProvider>
         <TooltipProvider>
+          <Snowfall snowflakeCount={100} speed={[1, 1]} />
+          <ChristmasDecorations />
           <MouseGlow />
           <Analytics/>
           <SpeedInsights/>
