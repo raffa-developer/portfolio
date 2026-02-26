@@ -20,7 +20,7 @@ const App = () => (
     <ThemeProvider>
       <LanguageProvider>
         <TooltipProvider>
-          <Snowfall snowflakeCount={100} speed={[1, 1]} />
+          {/* <Snowfall snowflakeCount={100} speed={[1, 1]} /> */}
           <ChristmasDecorations />
           <MouseGlow />
           <Analytics/>

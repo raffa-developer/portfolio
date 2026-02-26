@@ -133,7 +133,7 @@ const translations: Record<Language, Record<string, string>> = {
     'skills.subtitle': 'Tecnologias que trabalho',
     'skills.backend': 'Backend',
     'skills.frontend': 'Frontend',
-    'skills.database': 'Banco de Dados',
+    'skills.database': 'Base de Dados',
     'skills.tools': 'Ferramentas',
     
     // Experience
@@ -147,7 +147,7 @@ const translations: Record<Language, Record<string, string>> = {
     'experience.job2.title': 'Estagiário de TI',
     'experience.job2.company': 'PAOS',
     'experience.job2.period': 'Out 2024 - Jul 2025',
-    'experience.job2.description': 'Adquiri experiência prática em desenvolvimento Full-Stack, gerenciamento de banco de dados e manutenção de software. Contribuí para projetos internos e aprendi melhores práticas da indústria.',
+    'experience.job2.description': 'Adquiri experiência prática em desenvolvimento Full-Stack, base de dados e manutenção de software. Contribuí para projetos internos e aprendi melhores práticas da indústria.',
     
     // Projects
     'projects.title': 'Projetos em Destaque',
