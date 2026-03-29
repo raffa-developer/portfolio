@@ -221,6 +221,37 @@
   --shadow-glow: 0 0 40px hsl(0 84% 50% / 0.25) !important;
 }
 
+/* Easter Theme Colors */
+.easter-theme {
+  --primary: 276 88% 66% !important;
+  --primary-foreground: 0 0% 100% !important;
+  --accent: 38 96% 56% !important;
+  --accent-foreground: 222 47% 10% !important;
+  --ring: 276 88% 66% !important;
+  --gradient-primary: linear-gradient(135deg, hsl(276 88% 66%) 0%, hsl(38 96% 56%) 100%) !important;
+  --shadow-glow: 0 0 42px hsl(276 88% 66% / 0.28) !important;
+}
+
+.dark.easter-theme {
+  --primary: 278 90% 72% !important;
+  --primary-foreground: 222 47% 6% !important;
+  --accent: 41 98% 62% !important;
+  --accent-foreground: 222 47% 6% !important;
+  --ring: 278 90% 72% !important;
+  --gradient-primary: linear-gradient(135deg, hsl(278 90% 72%) 0%, hsl(41 98% 62%) 100%) !important;
+  --shadow-glow: 0 0 56px hsl(278 90% 72% / 0.28) !important;
+}
+
+.light.easter-theme {
+  --primary: 276 88% 66% !important;
+  --primary-foreground: 0 0% 100% !important;
+  --accent: 38 96% 56% !important;
+  --accent-foreground: 222 47% 10% !important;
+  --ring: 276 88% 66% !important;
+  --gradient-primary: linear-gradient(135deg, hsl(276 88% 66%) 0%, hsl(38 96% 56%) 100%) !important;
+  --shadow-glow: 0 0 42px hsl(276 88% 66% / 0.24) !important;
+}
+
 @keyframes float {
   0%, 100% {
     transform: translate3d(0, 0, 0); /* Use translate3d for GPU acceleration */

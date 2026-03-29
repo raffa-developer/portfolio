@@ -1,5 +1,5 @@
 import { useLanguage } from '@/contexts/LanguageContext';
-import { Briefcase, Calendar, MapPin } from 'lucide-react';
+import { Briefcase, Calendar, MapPin, ExternalLink } from 'lucide-react';
 import { useEffect, useRef, useState, useCallback } from 'react';
 
 interface Experience {
@@ -10,6 +10,8 @@ interface Experience {
   locationKey: string;
   isCurrent: boolean;
   skills: string[];
+  companyWebsite?: string;
+  companyLogo?: string;
 }
 
 interface ExperienceCardProps {
@@ -83,7 +85,7 @@ const ExperienceCard = ({ exp, index }: ExperienceCardProps) => {
         onMouseMove={handleMouseMove}
         onMouseEnter={handleMouseEnter}
         onMouseLeave={handleMouseLeave}
-        className={`group relative p-4 sm:p-6 md:p-8 rounded-2xl bg-card border border-border/50 shadow-card hover:border-primary/40 hover:shadow-glow/20 transition-all duration-500 overflow-hidden ${
+        className={`group relative p-4 sm:p-6 md:p-8 rounded-2xl bg-card/95 backdrop-blur-sm border border-border/50 shadow-card hover:border-primary/40 hover:shadow-glow/20 transition-all duration-500 overflow-hidden ${
           isVisible
             ? 'opacity-100 translate-y-0'
             : 'opacity-0 translate-y-8'
@@ -93,6 +95,8 @@ const ExperienceCard = ({ exp, index }: ExperienceCardProps) => {
           transitionTimingFunction: 'ease-out',
         }}
       >
+        <div className="pointer-events-none absolute inset-x-0 top-0 h-20 bg-gradient-to-b from-primary/10 to-transparent opacity-70" />
+
         {/* Mouse tracking glow effect - optimized */}
         <div
           className="pointer-events-none absolute -inset-px rounded-2xl opacity-0 group-hover:opacity-100 transition-opacity duration-500"
@@ -120,10 +124,34 @@ const ExperienceCard = ({ exp, index }: ExperienceCardProps) => {
         </div>
 
         {/* Company and meta info */}
-        <div className="flex flex-col sm:flex-row sm:flex-wrap sm:items-center gap-2 sm:gap-4 mb-4 text-sm">
+        <div className="relative flex flex-col sm:flex-row sm:flex-wrap sm:items-center gap-2 sm:gap-4 mb-4 text-sm">
           <div className="flex items-center gap-2 text-primary font-semibold">
-            <Briefcase className="h-4 w-4" />
-            <span>{t(exp.companyKey)}</span>
+            {exp.companyLogo ? (
+              <img
+                src={exp.companyLogo}
+                alt={`${t(exp.companyKey)} logo`}
+                loading="lazy"
+                decoding="async"
+                className="h-6 w-6 rounded-md border border-border/50 bg-card p-0.5"
+              />
+            ) : (
+              <Briefcase className="h-4 w-4" />
+            )}
+
+            {exp.companyWebsite ? (
+              <a
+                href={exp.companyWebsite}
+                target="_blank"
+                rel="noreferrer noopener"
+                className="inline-flex items-center gap-1 hover:text-primary/80 transition-colors"
+                aria-label={`${t(exp.companyKey)} website`}
+              >
+                <span>{t(exp.companyKey)}</span>
+                <ExternalLink className="h-3.5 w-3.5" />
+              </a>
+            ) : (
+              <span>{t(exp.companyKey)}</span>
+            )}
           </div>
           <div className="flex items-center gap-2 text-muted-foreground">
             <Calendar className="h-4 w-4" />
@@ -145,7 +173,7 @@ const ExperienceCard = ({ exp, index }: ExperienceCardProps) => {
           {exp.skills.map((skill, skillIndex) => (
             <span
               key={skillIndex}
-              className="px-3 py-1 text-xs font-medium rounded-full bg-primary/5 text-primary border border-primary/10 hover:bg-primary/10 transition-colors"
+              className="px-3 py-1 text-xs font-medium rounded-full bg-primary/5 text-primary border border-primary/10 hover:bg-primary/10 hover:border-primary/30 transition-all"
             >
               {skill}
             </span>
@@ -171,6 +199,8 @@ export const ExperienceSection = () => {
       locationKey: 'Portugal',
       isCurrent: true,
       skills: ['PHP', 'Java', '.NET', 'SQL Server', 'ReactJS'],
+      companyWebsite: 'https://paos.pt',
+      companyLogo: 'https://www.google.com/s2/favicons?domain=paos.pt&sz=128',
     },
     {
       titleKey: 'experience.job2.title',
@@ -180,6 +210,8 @@ export const ExperienceSection = () => {
       locationKey: 'Portugal',
       isCurrent: false,
       skills: ['VBA', 'MySQL', 'JavaScript'],
+      companyWebsite: 'https://paos.pt',
+      companyLogo: 'https://www.google.com/s2/favicons?domain=paos.pt&sz=128',
     },
   ];
 

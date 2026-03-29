@@ -39,6 +39,12 @@ export const Navigation = () => {
       es: 'Tema Navidad',
       fr: 'Tema Noël',
     },
+    easter: {
+      en: 'Easter Theme',
+      pt: 'Tema Páscoa',
+      es: 'Tema Pascua',
+      fr: 'Thème Pâques',
+    },
   };
 
   useEffect(() => {
@@ -145,7 +151,9 @@ export const Navigation = () => {
                     onClick={() => setThemeVariant(variant)}
                     className={themeVariant === variant ? 'bg-accent' : ''}
                   >
-                    <span className="mr-2">{variant === 'christmas' ? '🎄' : '🎨'}</span>
+                    <span className="mr-2">
+                      {variant === 'christmas' ? '🎄' : variant === 'easter' ? '🐣' : '🎨'}
+                    </span>
                     {themeVariantLabels[variant][language]}
                   </DropdownMenuItem>
                 ))}

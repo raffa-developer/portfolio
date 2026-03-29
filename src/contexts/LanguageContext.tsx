@@ -56,7 +56,7 @@ const translations: Record<Language, Record<string, string>> = {
     'experience.job1.title': 'Junior Software Developer',
     'experience.job1.company': 'PAOS',
     'experience.job1.period': 'Nov 2025 - today',
-    'experience.job1.description': 'Developing and maintaining web applications using PHP, Java, .NET, SQL Server and MySQL. Collaborating with cross-functional teams to deliver high-quality solutions.',
+    'experience.job1.description': 'Developing and maintaining web applications using PHP, Java, Go, .NET, SQL Server and MySQL. Collaborating with cross-functional teams to deliver high-quality solutions.',
     'experience.job2.title': 'IT Intern',
     'experience.job2.company': 'PAOS',
     'experience.job2.period': 'Oct 2024 - Jul 2025',
@@ -90,6 +90,7 @@ const translations: Record<Language, Record<string, string>> = {
     // Footer
     'footer.rights': 'All rights reserved.',
     'footer.christmas': 'Merry Christmas!',
+    'footer.easter': 'Happy Easter!',
     // Theme
     'theme.variant': 'Theme',
     'theme.colorMode': 'Color Mode',
@@ -176,6 +177,7 @@ const translations: Record<Language, Record<string, string>> = {
     // Footer
     'footer.rights': 'Todos os direitos reservados.',
     'footer.christmas': 'Feliz Natal!',
+    'footer.easter': 'Feliz Páscoa!',
     
     // Theme
     'theme.variant': 'Tema',
@@ -263,6 +265,7 @@ const translations: Record<Language, Record<string, string>> = {
     // Footer
     'footer.rights': 'Todos los derechos reservados.',
     'footer.christmas': 'Feliz Navidad!',
+    'footer.easter': '¡Feliz Pascua!',
     
     // Theme
     'theme.variant': 'Tema',
@@ -350,6 +353,7 @@ const translations: Record<Language, Record<string, string>> = {
     // Footer
     'footer.rights': 'Tous droits réservés.',
     'footer.christmas': 'Joyeux Noël!',
+    'footer.easter': 'Joyeuses Pâques!',
     
     // Theme
     'theme.variant': 'Thème',

@@ -1,10 +1,10 @@
 import { useLanguage } from '@/contexts/LanguageContext';
-import { useChristmas } from '@/contexts/ThemeContext';
+import { useTheme } from '@/contexts/ThemeContext';
 import { Heart, Github, Linkedin } from 'lucide-react';
 
 export const Footer = () => {
   const { t } = useLanguage();
-  const { isChristmasSeason } = useChristmas();
+  const { themeVariant } = useTheme();
   const currentYear = new Date().getFullYear();
 
   return (
@@ -14,8 +14,11 @@ export const Footer = () => {
           {/* Copyright */}
           <div className="text-xs sm:text-sm text-muted-foreground order-2 md:order-1">
             © {currentYear} Rafael Gonçalves. {t('footer.rights')}
-            {isChristmasSeason && (
+            {themeVariant === 'christmas' && (
               <span className="ml-2 text-primary">🎄 {t('footer.christmas')} 🎅</span>
+            )}
+            {themeVariant === 'easter' && (
+              <span className="ml-2 text-primary">🐣 {t('footer.easter')} 🌷</span>
             )}
           </div>
 

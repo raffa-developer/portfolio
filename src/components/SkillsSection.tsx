@@ -6,7 +6,12 @@ import { useScrollAnimation } from '@/hooks/use-scroll-animation';
 interface SkillCategory {
   title: string;
   icon: React.ReactNode;
-  skills: string[];
+  skills: SkillItem[];
+}
+
+interface SkillItem {
+  name: string;
+  logo: string;
 }
 
 interface MousePosition {
@@ -91,10 +96,17 @@ const SkillCard = ({
       <div className="relative flex flex-wrap gap-2">
         {category.skills.map((skill) => (
           <span
-            key={skill}
-            className="px-3 py-1.5 text-sm text-muted-foreground bg-secondary/50 rounded-md border border-border/30 hover:text-foreground hover:border-primary/30 hover:bg-primary/5 transition-all duration-200"
+            key={skill.name}
+            className="inline-flex items-center gap-2 px-3 py-1.5 text-sm text-muted-foreground bg-secondary/50 rounded-md border border-border/30 hover:text-foreground hover:border-primary/30 hover:bg-primary/5 transition-all duration-200"
           >
-            {skill}
+            <img
+              src={skill.logo}
+              alt={`${skill.name} logo`}
+              loading="lazy"
+              decoding="async"
+              className="w-4 h-4 shrink-0"
+            />
+            {skill.name}
           </span>
         ))}
       </div>
@@ -109,22 +121,50 @@ export const SkillsSection = () => {
     {
       title: t('skills.backend'),
       icon: <Code2 className="w-5 h-5" />,
-      skills: ['C#', '.NET', 'ASP.NET', 'PHP', 'Java', 'Node.js', 'REST APIs'],
+      skills: [
+        { name: 'C#', logo: 'https://cdn.jsdelivr.net/gh/devicons/devicon/icons/csharp/csharp-original.svg' },
+        { name: '.NET', logo: 'https://cdn.simpleicons.org/dotnet' },
+        { name: 'ASP.NET', logo: 'https://cdn.simpleicons.org/dotnet' },
+        { name: 'PHP', logo: 'https://cdn.simpleicons.org/php' },
+        { name: 'Java', logo: 'https://cdn.simpleicons.org/openjdk' },
+        { name: 'Go', logo: 'https://cdn.simpleicons.org/go' },
+        { name: 'Node.js', logo: 'https://cdn.simpleicons.org/nodedotjs' },
+        { name: 'REST APIs', logo: 'https://cdn.simpleicons.org/openapiinitiative' },
+      ],
     },
     {
       title: t('skills.frontend'),
       icon: <Layout className="w-5 h-5" />,
-      skills: ['JavaScript', 'TypeScript', 'React', 'HTML5', 'CSS3', 'Tailwind CSS'],
+      skills: [
+        { name: 'JavaScript', logo: 'https://cdn.simpleicons.org/javascript' },
+        { name: 'TypeScript', logo: 'https://cdn.simpleicons.org/typescript' },
+        { name: 'React', logo: 'https://cdn.simpleicons.org/react' },
+        { name: 'HTML5', logo: 'https://cdn.simpleicons.org/html5' },
+        { name: 'CSS3', logo: 'https://cdn.simpleicons.org/css' },
+        { name: 'Tailwind CSS', logo: 'https://cdn.simpleicons.org/tailwindcss' },
+      ],
     },
     {
       title: t('skills.database'),
       icon: <Database className="w-5 h-5" />,
-      skills: ['SQL Server', 'MySQL', 'PostgreSQL'],
+      skills: [
+        { name: 'SQL Server', logo: 'https://cdn.jsdelivr.net/gh/devicons/devicon/icons/microsoftsqlserver/microsoftsqlserver-plain.svg' },
+        { name: 'MySQL', logo: 'https://cdn.simpleicons.org/mysql' },
+        { name: 'PostgreSQL', logo: 'https://cdn.simpleicons.org/postgresql' },
+      ],
     },
     {
       title: t('skills.tools'),
       icon: <Settings className="w-5 h-5" />,
-      skills: ['Git', 'Docker', 'Visual Studio', 'VS Code', 'Jira', 'WordPress'],
+      skills: [
+        { name: 'Git', logo: 'https://cdn.simpleicons.org/git' },
+        { name: 'Docker', logo: 'https://cdn.simpleicons.org/docker' },
+        // { name: 'Visual Studio', logo: 'https://cdn.simpleicons.org/visualstudio' },
+        // { name: 'VS Code', logo: 'https://cdn.simpleicons.org/visualstudiocode' },
+        { name: 'Jira', logo: 'https://cdn.simpleicons.org/jira' },
+        { name: 'Confluence', logo: 'https://cdn.simpleicons.org/confluence' },
+        { name: 'WordPress', logo: 'https://cdn.simpleicons.org/wordpress' },
+      ],
     },
   ];
 

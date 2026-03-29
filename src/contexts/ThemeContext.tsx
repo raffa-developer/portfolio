@@ -1,7 +1,7 @@
 import React, { createContext, useContext, useState, useEffect, useMemo } from 'react';
 
 export type ColorTheme = 'dark' | 'light';
-export type ThemeVariant = 'default' | 'christmas';
+export type ThemeVariant = 'default' | 'christmas' | 'easter';
 
 interface ThemeContextType {
   colorTheme: ColorTheme;
@@ -24,13 +24,13 @@ export const ThemeProvider: React.FC<{ children: React.ReactNode }> = ({ childre
     return (stored as ThemeVariant) || 'default';
   });
 
-  const availableVariants: ThemeVariant[] = ['default', 'christmas'];
+  const availableVariants: ThemeVariant[] = ['default', 'christmas', 'easter'];
 
   useEffect(() => {
     const root = document.documentElement;
     
     // Remove all theme classes
-    root.classList.remove('light', 'dark', 'christmas-theme', 'default-theme');
+    root.classList.remove('light', 'dark', 'christmas-theme', 'easter-theme', 'default-theme');
     
     // Add color theme (dark/light)
     root.classList.add(colorTheme);
@@ -38,6 +38,8 @@ export const ThemeProvider: React.FC<{ children: React.ReactNode }> = ({ childre
     // Add theme variant
     if (themeVariant === 'christmas') {
       root.classList.add('christmas-theme');
+    } else if (themeVariant === 'easter') {
+      root.classList.add('easter-theme');
     } else {
       root.classList.add('default-theme');
     }
