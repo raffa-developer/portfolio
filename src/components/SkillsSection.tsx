@@ -126,7 +126,7 @@ export const SkillsSection = () => {
         { name: '.NET', logo: 'https://cdn.simpleicons.org/dotnet' },
         { name: 'ASP.NET', logo: 'https://cdn.simpleicons.org/dotnet' },
         { name: 'PHP', logo: 'https://cdn.simpleicons.org/php' },
-        { name: 'Java', logo: 'https://cdn.simpleicons.org/openjdk' },
+        { name: 'Java', logo: 'https://cdn-icons-png.flaticon.com/512/226/226777.png' },
         { name: 'Go', logo: 'https://cdn.simpleicons.org/go' },
         { name: 'Node.js', logo: 'https://cdn.simpleicons.org/nodedotjs' },
         { name: 'REST APIs', logo: 'https://cdn.simpleicons.org/openapiinitiative' },
