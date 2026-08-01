@@ -2,10 +2,13 @@ import { useLanguage } from '@/contexts/LanguageContext';
 import { useChristmas } from '@/contexts/ThemeContext';
 import { Button } from '@/components/ui/button';
 import { Github, Linkedin, ArrowDown, Sparkles } from 'lucide-react';
+import { InteractiveTerminal } from '@/components/InteractiveTerminal';
+import { useState } from 'react';
 
 export const HeroSection = () => {
   const { t } = useLanguage();
   const { isChristmasSeason } = useChristmas();
+  const [gameCelebration, setGameCelebration] = useState(false);
 
   const handleScrollToSection = (sectionId: string) => {
     const element = document.querySelector(sectionId);
@@ -70,71 +73,89 @@ export const HeroSection = () => {
       </div>
 
       <div className="container mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
-        <div className="max-w-4xl mx-auto text-center">
-          {/* Greeting */}
-          <p className="text-primary font-medium mb-4 animate-fade-up" style={{ animationDelay: '0.1s' }}>
-            {t('hero.greeting')}
-          </p>
+        <div className="mx-auto grid items-center gap-8 lg:grid-cols-[1.05fr_0.95fr] lg:gap-12">
+          <div className="text-center lg:text-left">
+            {/* Greeting */}
+            <p className="text-primary font-medium mb-4 animate-fade-up" style={{ animationDelay: '0.1s' }}>
+              {t('hero.greeting')}
+            </p>
 
-          {/* Name */}
-          <h1 className="font-heading text-4xl sm:text-5xl md:text-6xl lg:text-8xl font-bold mb-4 animate-fade-up" style={{ animationDelay: '0.2s' }}>
-            Rafael{' '}
-            <span className="text-gradient">Gonçalves</span>
-          </h1>
+            {/* Name */}
+            <h1 className="font-heading text-4xl sm:text-5xl md:text-6xl lg:text-7xl xl:text-8xl font-bold mb-4 animate-fade-up" style={{ animationDelay: '0.2s' }}>
+              Rafael{' '}
+              <span className="text-gradient">Gonçalves</span>
+            </h1>
 
-          {/* Role */}
-          <h2 className="font-heading text-xl sm:text-2xl md:text-3xl lg:text-4xl text-muted-foreground mb-6 animate-fade-up" style={{ animationDelay: '0.3s' }}>
-            {t('hero.role')}
-          </h2>
+            {/* Role */}
+            <h2 className="font-heading text-xl sm:text-2xl md:text-3xl lg:text-4xl text-muted-foreground mb-6 animate-fade-up" style={{ animationDelay: '0.3s' }}>
+              {t('hero.role')}
+            </h2>
 
-          {/* Description */}
-          <p className="text-base md:text-lg lg:text-xl text-muted-foreground max-w-2xl mx-auto mb-8 px-4 sm:px-0 animate-fade-up" style={{ animationDelay: '0.4s' }}>
-            {t('hero.description')}
-          </p>
+            {/* Description */}
+            <p className="text-base md:text-lg lg:text-xl text-muted-foreground max-w-2xl mx-auto lg:mx-0 mb-8 px-4 sm:px-0 animate-fade-up" style={{ animationDelay: '0.4s' }}>
+              {t('hero.description')}
+            </p>
 
-          {/* CTAs */}
-          <div className="flex flex-col sm:flex-row items-center justify-center gap-3 sm:gap-4 mb-12 w-full px-4 sm:px-0 animate-fade-up" style={{ animationDelay: '0.5s' }}>
-            <Button
-              size="lg"
-              onClick={() => handleScrollToSection('#projects')}
-              className="w-full sm:w-auto bg-primary/10 text-primary border border-primary/30 hover:bg-primary/20 hover:border-primary/50 transition-all shadow-sm px-8"
-            >
-              {t('hero.cta.projects')}
-            </Button>
-            <Button
-              variant="outline"
-              size="lg"
-              onClick={() => handleScrollToSection('#contact')}
-              
-              className="w-full sm:w-auto border-border/50 text-primary hover:border-primary/50 hover:bg-primary/5 hover:text-primary transition-all px-8"
-            >
-              {t('hero.cta.contact')}
-            </Button>
+            {/* CTAs */}
+            <div className="flex flex-col sm:flex-row items-center justify-center lg:justify-start gap-3 sm:gap-4 mb-8 w-full px-4 sm:px-0 animate-fade-up" style={{ animationDelay: '0.5s' }}>
+              <Button
+                size="lg"
+                onClick={() => handleScrollToSection('#projects')}
+                className="w-full sm:w-auto bg-primary/10 text-primary border border-primary/30 hover:bg-primary/20 hover:border-primary/50 transition-all shadow-sm px-8 hover:-translate-y-1 hover:shadow-lg"
+              >
+                {t('hero.cta.projects')}
+              </Button>
+              <Button
+                variant="outline"
+                size="lg"
+                onClick={() => handleScrollToSection('#contact')}
+                className="w-full sm:w-auto border-border/50 text-primary hover:border-primary/50 hover:bg-primary/5 hover:text-primary transition-all px-8 hover:-translate-y-1 hover:shadow-lg"
+              >
+                {t('hero.cta.contact')}
+              </Button>
+            </div>
+
+            {/* Social Links */}
+            <div className="flex items-center justify-center lg:justify-start gap-4 animate-fade-up" style={{ animationDelay: '0.6s' }}>
+              <a
+                href="https://www.linkedin.com/in/rafa-gonçalves/"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="p-3 rounded-full border border-border hover:border-primary hover:text-primary hover:bg-primary/10 transition-all duration-300 hover:-translate-y-1"
+              >
+                <Linkedin className="h-5 w-5" />
+              </a>
+              <a
+                href="https://github.com/raffa-developer"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="p-3 rounded-full border border-border hover:border-primary hover:text-primary hover:bg-primary/10 transition-all duration-300 hover:-translate-y-1"
+              >
+                <Github className="h-5 w-5" />
+              </a>
+            </div>
           </div>
 
-          {/* Social Links */}
-          <div className="flex items-center justify-center gap-4 animate-fade-up" style={{ animationDelay: '0.6s' }}>
-            <a
-              href="https://www.linkedin.com/in/rafa-gonçalves/"
-              target="_blank"
-              rel="noopener noreferrer"
-              className="p-3 rounded-full border border-border hover:border-primary hover:text-primary hover:bg-primary/10 transition-all duration-300"
-            >
-              <Linkedin className="h-5 w-5" />
-            </a>
-            <a
-              href="https://github.com/raffa-developer"
-              target="_blank"
-              rel="noopener noreferrer"
-              className="p-3 rounded-full border border-border hover:border-primary hover:text-primary hover:bg-primary/10 transition-all duration-300"
-            >
-              <Github className="h-5 w-5" />
-            </a>
+          <div className="w-full max-w-xl mx-auto lg:mx-0 lg:justify-self-end animate-fade-up" style={{ animationDelay: '0.55s' }}>
+            <InteractiveTerminal
+              onGameWin={() => {
+                setGameCelebration(true);
+                window.setTimeout(() => setGameCelebration(false), 2200);
+              }}
+            />
           </div>
         </div>
       </div>
 
       {/* Scroll indicator */}
+      {gameCelebration && (
+        <div className="pointer-events-none absolute inset-0 z-20 flex items-center justify-center bg-background/20 backdrop-blur-[2px]">
+          <div className="rounded-full border border-primary/30 bg-card/90 px-6 py-3 text-lg font-semibold text-primary shadow-2xl">
+            🎉 You won the mini game!
+          </div>
+        </div>
+      )}
+
       <div className="absolute bottom-8 left-1/2 -translate-x-1/2 z-10">
         <button
           onClick={() => handleScrollToSection('#about')}
