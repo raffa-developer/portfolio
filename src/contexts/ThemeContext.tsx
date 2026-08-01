@@ -6,6 +6,7 @@ export type ThemeVariant = 'default' | 'christmas' | 'easter';
 interface ThemeContextType {
   colorTheme: ColorTheme;
   themeVariant: ThemeVariant;
+  setColorTheme: (theme: ColorTheme) => void;
   toggleColorTheme: () => void;
   setThemeVariant: (variant: ThemeVariant) => void;
   availableVariants: ThemeVariant[];
@@ -53,6 +54,10 @@ export const ThemeProvider: React.FC<{ children: React.ReactNode }> = ({ childre
     setColorTheme(prev => prev === 'dark' ? 'light' : 'dark');
   };
 
+  const setColorThemeValue = (theme: ColorTheme) => {
+    setColorTheme(theme);
+  };
+
   const setThemeVariant = (variant: ThemeVariant) => {
     setThemeVariantState(variant);
   };
@@ -61,6 +66,7 @@ export const ThemeProvider: React.FC<{ children: React.ReactNode }> = ({ childre
     <ThemeContext.Provider value={{ 
       colorTheme, 
       themeVariant, 
+      setColorTheme: setColorThemeValue,
       toggleColorTheme, 
       setThemeVariant,
       availableVariants 

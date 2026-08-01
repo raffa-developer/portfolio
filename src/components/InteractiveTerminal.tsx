@@ -107,7 +107,7 @@ export const InteractiveTerminal = ({ onGameWin }: InteractiveTerminalProps) => 
 const getResponse = (command: string) => {
   switch (command) {
     case 'help':
-      return 'Commands: help, whoami, clear, quit';
+      return 'Commands: help, whoami, clear, skills, projects, contact';
     case 'whoami':
       return 'Rafael Gonçalves — Fullstack Developer with experience in building scalable web applications.';
     case 'skills':

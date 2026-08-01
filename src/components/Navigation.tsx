@@ -11,6 +11,7 @@ import {
   DropdownMenuSeparator,
   DropdownMenuLabel,
 } from '@/components/ui/dropdown-menu';
+import { Switch } from '@/components/ui/switch';
 import 'flag-icons/css/flag-icons.min.css';
 
 const languages: { code: Language; name: string; countryCode: string }[] = [
@@ -24,7 +25,7 @@ export const Navigation = () => {
   const [isOpen, setIsOpen] = useState(false);
   const [isScrolled, setIsScrolled] = useState(false);
   const { language, setLanguage, t } = useLanguage();
-  const { colorTheme, themeVariant, toggleColorTheme, setThemeVariant, availableVariants } = useTheme();
+  const { colorTheme, themeVariant, setColorTheme, setThemeVariant, availableVariants } = useTheme();
 
   const themeVariantLabels: Record<ThemeVariant, Record<Language, string>> = {
     default: {
@@ -159,19 +160,17 @@ export const Navigation = () => {
                 ))}
                 <DropdownMenuSeparator />
                 <DropdownMenuLabel>{t('theme.colorMode')}</DropdownMenuLabel>
-                <DropdownMenuItem onClick={toggleColorTheme}>
-                  {colorTheme === 'dark' ? (
-                    <>
-                      <Sun className="h-4 w-4 mr-2" />
-                      {t('theme.lightMode')}
-                    </>
-                  ) : (
-                    <>
-                      <Moon className="h-4 w-4 mr-2" />
-                      {t('theme.darkMode')}
-                    </>
-                  )}
-                </DropdownMenuItem>
+                <div className="flex items-center justify-between gap-4 px-2 py-2">
+                  <div className="flex items-center gap-2 text-sm text-muted-foreground">
+                    <Moon className="h-4 w-4" />
+                    <span>{t('theme.darkMode')}</span>
+                  </div>
+                  <Switch
+                    checked={colorTheme === 'dark'}
+                    onCheckedChange={(checked) => setColorTheme(checked ? 'dark' : 'light')}
+                    aria-label={t('theme.colorMode')}
+                  />
+                </div>
               </DropdownMenuContent>
             </DropdownMenu>
 
