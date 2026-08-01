@@ -114,7 +114,7 @@ const translations: Record<Language, Record<string, string>> = {
     // Hero
     'hero.greeting': 'Olá, eu sou',
     'hero.role': 'Desenvolvedor Full-Stack',
-    'hero.description': 'Construindo soluções web modernas através de lógica e código. Especializado em ecossistemas C#, ASP.NET e JavaScript.',
+    'hero.description': 'Construindo soluções web modernas através de lógica e código. Especializado em ecossistemas C#, .NET e JavaScript.',
     'hero.cta.projects': 'Ver Projetos',
     'hero.cta.contact': 'Entre em Contato',
     
@@ -208,7 +208,7 @@ const translations: Record<Language, Record<string, string>> = {
     // Hero
     'hero.greeting': 'Hola, soy',
     'hero.role': 'Desarrollador Full-Stack',
-    'hero.description': 'Construyendo soluciones web modernas a través de lógica y código. Especializado en ecosistemas C#, ASP.NET y JavaScript.',
+    'hero.description': 'Construyendo soluciones web modernas a través de lógica y código. Especializado en ecosistemas C#, .NET y JavaScript.',
     'hero.cta.projects': 'Ver Proyectos',
     'hero.cta.contact': 'Contactar',
     
@@ -302,7 +302,7 @@ const translations: Record<Language, Record<string, string>> = {
     // Hero
     'hero.greeting': 'Bonjour, je suis',
     'hero.role': 'Développeur Full-Stack',
-    'hero.description': 'Construire des solutions web modernes grâce à la logique et au code. Spécialisé dans les écosystèmes C#, ASP.NET et JavaScript.',
+    'hero.description': 'Construire des solutions web modernes grâce à la logique et au code. Spécialisé dans les écosystèmes C#, .NET et JavaScript.',
     'hero.cta.projects': 'Voir les Projets',
     'hero.cta.contact': 'Me Contacter',
     
